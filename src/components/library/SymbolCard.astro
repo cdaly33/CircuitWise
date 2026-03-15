@@ -1,0 +1,31 @@
+---
+interface Props {
+  name: string;
+  svgSrc: string;
+  alt: string;
+  description?: string;
+  href?: string;
+}
+
+const { name, svgSrc, alt, description, href } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+  {...(href ? { href } : {})}
+  class:list={[
+    'flex flex-col items-center rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 text-center shadow-sm transition-shadow',
+    href && 'hover:shadow-md focus:outline-none focus:ring-2 focus:ring-current/50 focus:ring-offset-2',
+  ]}
+>
+  <img
+    src={svgSrc}
+    alt={alt}
+    class="mb-3 h-16 w-16 object-contain dark:invert"
+    loading="lazy"
+  />
+  <h3 class="text-sm font-semibold text-[var(--color-text)]">{name}</h3>
+  {description && (
+    <p class="mt-1 text-xs text-[var(--color-text-muted)]">{description}</p>
+  )}
+</Tag>

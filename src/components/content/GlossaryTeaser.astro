@@ -1,0 +1,22 @@
+---
+interface Props {
+  term: string;
+  slug: string;
+  definition: string;
+}
+
+const { term, slug, definition } = Astro.props;
+---
+
+<aside class="my-3 inline-block rounded-md border border-[var(--color-border)] bg-[var(--color-bg-alt)] px-4 py-3">
+  <p class="text-sm text-[var(--color-text)]">
+    <strong class="font-semibold">{term}</strong>
+    <span class="text-[var(--color-text-muted)]"> — {definition}</span>
+  </p>
+  <a
+    href={`/glossary/${slug}/`}
+    class="mt-1 inline-block text-sm font-medium text-current underline-offset-2 hover:underline"
+  >
+    Read more →
+  </a>
+</aside>

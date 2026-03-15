@@ -1,0 +1,63 @@
+---
+interface Props {
+  totalStages: number;
+  currentStage: number;
+}
+
+const { totalStages, currentStage } = Astro.props;
+const stages = Array.from({ length: totalStages + 1 }, (_, i) => i);
+---
+
+<nav aria-label="Stage progress" class="w-full">
+  <ol class="flex items-center gap-0">
+    {stages.map((stage) => {
+      const isComplete = stage < currentStage;
+      const isCurrent = stage === currentStage;
+      const isFuture = stage > currentStage;
+
+      return (
+        <li class="flex flex-1 flex-col items-center gap-1">
+          {/* Step indicator */}
+          <div class="flex w-full items-center">
+            {stage > 0 && (
+              <div
+                class:list={[
+                  'h-0.5 flex-1',
+                  isComplete || isCurrent ? 'bg-[var(--color-ground)]' : 'bg-[var(--color-border)]',
+                ]}
+              />
+            )}
+            <div
+              class:list={[
+                'flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold border-2',
+                isComplete && 'border-[var(--color-ground)] bg-[var(--color-ground)] text-white',
+                isCurrent && 'border-[var(--color-current)] bg-[var(--color-bg)] text-[var(--color-current)]',
+                isFuture && 'border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text-muted)]',
+              ]}
+              aria-current={isCurrent ? 'step' : undefined}
+            >
+              {isComplete ? '✓' : stage}
+            </div>
+            {stage < totalStages && (
+              <div
+                class:list={[
+                  'h-0.5 flex-1',
+                  isComplete ? 'bg-[var(--color-ground)]' : 'bg-[var(--color-border)]',
+                ]}
+              />
+            )}
+          </div>
+          {/* Label */}
+          <span
+            class:list={[
+              'text-[0.625rem] leading-tight text-center',
+              isCurrent ? 'font-semibold text-[var(--color-text)]' : 'text-[var(--color-text-muted)]',
+            ]}
+          >
+            {isComplete ? 'Done' : isCurrent ? 'Current' : `Stage ${stage}`}
+          </span>
+        </li>
+      );
+    })}
+  </ol>
+</nav>

@@ -1,0 +1,137 @@
+---
+interface Props {
+  type: 'multiple-choice' | 'fill-in';
+  question: string;
+  options?: string[];
+  correctAnswer: string;
+  explanation: string;
+}
+
+const { type, question, options = [], correctAnswer, explanation } = Astro.props;
+const exerciseId = `exercise-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div
+  class="my-6 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-alt)] p-5"
+  data-exercise={exerciseId}
+  data-correct={correctAnswer}
+  data-type={type}
+>
+  <!-- Header -->
+  <div class="mb-3 flex items-center gap-2 text-lg font-semibold text-[var(--color-text)]">
+    <span aria-hidden="true">📝</span>
+    <span>Exercise</span>
+  </div>
+
+  <!-- Question -->
+  <p class="mb-4 font-medium text-[var(--color-text)]">{question}</p>
+
+  {type === 'multiple-choice' && options.length > 0 && (
+    <fieldset class="mb-4 space-y-2">
+      <legend class="sr-only">{question}</legend>
+      {options.map((option, i) => (
+        <label class="flex cursor-pointer items-center gap-3 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm transition-colors hover:bg-blue-50 dark:hover:bg-blue-950/20">
+          <input
+            type="radio"
+            name={exerciseId}
+            value={option}
+            class="size-4 accent-current"
+          />
+          <span class="text-[var(--color-text)]">{option}</span>
+        </label>
+      ))}
+    </fieldset>
+  )}
+
+  {type === 'fill-in' && (
+    <div class="mb-4">
+      <label for={`${exerciseId}-input`} class="sr-only">Your answer</label>
+      <input
+        type="text"
+        id={`${exerciseId}-input`}
+        placeholder="Type your answer…"
+        class="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:border-current focus:outline-none focus:ring-2 focus:ring-current/30"
+      />
+    </div>
+  )}
+
+  <!-- Submit button (JS-enhanced) -->
+  <button
+    type="button"
+    data-check={exerciseId}
+    class="rounded-md bg-current px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-current/50 focus:ring-offset-2"
+  >
+    Check Answer
+  </button>
+
+  <!-- JS feedback area -->
+  <div
+    data-feedback={exerciseId}
+    aria-live="polite"
+    class="mt-3 hidden rounded-md p-3 text-sm"
+  ></div>
+
+  <!-- No-JS fallback -->
+  <noscript>
+    <details class="mt-4 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-3">
+      <summary class="cursor-pointer font-medium text-[var(--color-text)]">Show Answer</summary>
+      <div class="mt-2 text-sm text-[var(--color-text)]">
+        <p><strong>Answer:</strong> {correctAnswer}</p>
+        <p class="mt-1 text-[var(--color-text-muted)]">{explanation}</p>
+      </div>
+    </details>
+  </noscript>
+</div>
+
+<script>
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-check]');
+    if (!btn) return;
+
+    const id = btn.dataset.check!;
+    const container = document.querySelector<HTMLElement>(`[data-exercise="${id}"]`);
+    if (!container) return;
+
+    const correctAnswer = container.dataset.correct!;
+    const exerciseType = container.dataset.type!;
+    const feedbackEl = container.querySelector<HTMLElement>(`[data-feedback="${id}"]`);
+    if (!feedbackEl) return;
+
+    let userAnswer = '';
+
+    if (exerciseType === 'multiple-choice') {
+      const checked = container.querySelector<HTMLInputElement>(`input[name="${id}"]:checked`);
+      if (!checked) {
+        feedbackEl.textContent = 'Please select an answer.';
+        feedbackEl.className = 'mt-3 rounded-md p-3 text-sm bg-yellow-50 dark:bg-yellow-950/20 text-yellow-700 dark:text-yellow-300 border border-yellow-300 dark:border-yellow-700';
+        feedbackEl.classList.remove('hidden');
+        return;
+      }
+      userAnswer = checked.value;
+    } else {
+      const input = container.querySelector<HTMLInputElement>(`#${id}-input`);
+      userAnswer = input?.value.trim() ?? '';
+      if (!userAnswer) {
+        feedbackEl.textContent = 'Please enter an answer.';
+        feedbackEl.className = 'mt-3 rounded-md p-3 text-sm bg-yellow-50 dark:bg-yellow-950/20 text-yellow-700 dark:text-yellow-300 border border-yellow-300 dark:border-yellow-700';
+        feedbackEl.classList.remove('hidden');
+        return;
+      }
+    }
+
+    const isCorrect = userAnswer.toLowerCase() === correctAnswer.toLowerCase();
+    const explanation = container.querySelector('noscript details .mt-2')?.textContent ?? '';
+
+    if (isCorrect) {
+      feedbackEl.innerHTML = `<strong>✅ Correct!</strong> ${container.querySelector('noscript details p:last-child')?.textContent ?? ''}`;
+      feedbackEl.className = 'mt-3 rounded-md p-3 text-sm bg-green-50 dark:bg-green-950/20 text-green-700 dark:text-green-300 border border-green-300 dark:border-green-700';
+    } else {
+      feedbackEl.innerHTML = `<strong>❌ Not quite.</strong> The correct answer is <strong>${correctAnswer}</strong>. ${container.querySelector('noscript details p:last-child')?.textContent ?? ''}`;
+      feedbackEl.className = 'mt-3 rounded-md p-3 text-sm bg-red-50 dark:bg-red-950/20 text-red-700 dark:text-red-300 border border-red-300 dark:border-red-700';
+    }
+
+    feedbackEl.classList.remove('hidden');
+    btn.disabled = true;
+    btn.classList.add('opacity-50', 'cursor-not-allowed');
+  });
+</script>

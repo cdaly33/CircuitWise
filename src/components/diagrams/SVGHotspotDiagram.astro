@@ -1,0 +1,41 @@
+---
+/**
+ * SVGHotspotDiagram — Interactive SVG with labeled hotspots.
+ * TODO: Phase 10 — Add interactive hover/click tooltips for each hotspot.
+ */
+import DiagramFrame from './DiagramFrame.astro';
+
+interface Hotspot {
+  id: string;
+  label: string;
+  description: string;
+}
+
+interface Props {
+  alt: string;
+  hotspots: Array<Hotspot>;
+}
+
+const { alt, hotspots } = Astro.props;
+---
+
+<div class="my-6">
+  <DiagramFrame alt={alt}>
+    <slot />
+  </DiagramFrame>
+
+  {/* Hotspot labels list — visible text for accessibility */}
+  {hotspots.length > 0 && (
+    <ul class="mt-3 space-y-1 px-2">
+      {hotspots.map((hs) => (
+        <li class="flex items-baseline gap-2 text-sm" id={`hotspot-${hs.id}`}>
+          <span class="inline-block size-2.5 shrink-0 rounded-full bg-current" aria-hidden="true" />
+          <span>
+            <strong class="font-semibold text-[var(--color-text)]">{hs.label}</strong>
+            <span class="text-[var(--color-text-muted)]"> — {hs.description}</span>
+          </span>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>

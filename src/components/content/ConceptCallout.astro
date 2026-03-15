@@ -1,0 +1,45 @@
+---
+interface Props {
+  type: 'info' | 'warning' | 'tip';
+  title?: string;
+}
+
+const { type, title } = Astro.props;
+
+const config = {
+  info: {
+    defaultTitle: 'Info',
+    borderColor: 'border-l-current',
+    bgColor: 'bg-blue-50 dark:bg-blue-950/30',
+    titleColor: 'text-current',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="size-5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>`,
+  },
+  warning: {
+    defaultTitle: 'Warning',
+    borderColor: 'border-l-safety',
+    bgColor: 'bg-yellow-50 dark:bg-yellow-950/30',
+    titleColor: 'text-safety',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="size-5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>`,
+  },
+  tip: {
+    defaultTitle: 'Tip',
+    borderColor: 'border-l-ground',
+    bgColor: 'bg-green-50 dark:bg-green-950/30',
+    titleColor: 'text-ground',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="size-5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM4 11a1 1 0 100-2H3a1 1 0 000 2h1zM10 18a3 3 0 01-2.83-2h5.66A3 3 0 0110 18zM13 14a1 1 0 011 1v.01a1 1 0 01-1 1H7a1 1 0 01-1-1V15a1 1 0 011-1h6zM7.21 13h5.58a7.002 7.002 0 00-5.58 0zM10 5a5 5 0 00-3 9h6a5 5 0 00-3-9z" /></svg>`,
+  },
+} as const;
+
+const { defaultTitle, borderColor, bgColor, titleColor, icon } = config[type];
+const displayTitle = title ?? defaultTitle;
+---
+
+<aside role="note" class={`my-4 rounded-r-lg border-l-4 p-4 ${borderColor} ${bgColor}`}>
+  <div class={`mb-2 flex items-center gap-2 font-semibold ${titleColor}`}>
+    <Fragment set:html={icon} />
+    <span>{displayTitle}</span>
+  </div>
+  <div class="text-sm leading-relaxed text-[var(--color-text)]">
+    <slot />
+  </div>
+</aside>

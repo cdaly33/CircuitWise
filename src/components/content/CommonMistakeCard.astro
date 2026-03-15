@@ -1,0 +1,28 @@
+---
+interface Props {
+  mistake: string;
+  correction: string;
+}
+
+const { mistake, correction } = Astro.props;
+---
+
+<div class="my-4 overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)]">
+  <!-- Mistake section -->
+  <div class="border-l-4 border-l-red-500 bg-red-50 p-4 dark:bg-red-950/20">
+    <div class="mb-1 flex items-center gap-2 font-semibold text-red-600 dark:text-red-400">
+      <span aria-hidden="true" class="text-lg">❌</span>
+      <span>Common Mistake</span>
+    </div>
+    <p class="text-sm leading-relaxed text-[var(--color-text)]">{mistake}</p>
+  </div>
+
+  <!-- Correction section -->
+  <div class="border-l-4 border-l-green-500 bg-green-50 p-4 dark:bg-green-950/20">
+    <div class="mb-1 flex items-center gap-2 font-semibold text-green-600 dark:text-green-400">
+      <span aria-hidden="true" class="text-lg">✅</span>
+      <span>Instead</span>
+    </div>
+    <p class="text-sm leading-relaxed text-[var(--color-text)]">{correction}</p>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+---
+interface Props {
+  terms: Array<{ term: string; slug: string; brief: string }>;
+}
+
+const { terms } = Astro.props;
+---
+
+<dl class="my-4 space-y-3">
+  {terms.map(({ term, slug, brief }) => (
+    <div class="rounded-md border border-[var(--color-border)] bg-[var(--color-bg-alt)] px-4 py-3">
+      <dt class="font-semibold text-[var(--color-text)]">
+        <a
+          href={`/glossary/${slug}/`}
+          class="text-current underline decoration-current/40 underline-offset-2 hover:decoration-current"
+        >
+          {term}
+        </a>
+      </dt>
+      <dd class="mt-1 text-sm leading-relaxed text-[var(--color-text-muted)]">{brief}</dd>
+    </div>
+  ))}
+</dl>

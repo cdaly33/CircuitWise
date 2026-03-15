@@ -1,0 +1,24 @@
+---
+interface Props {
+  alt: string;
+  caption?: string;
+  width?: string;
+}
+
+const { alt, caption, width = '100%' } = Astro.props;
+---
+
+<figure
+  class="my-6 mx-auto overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] shadow-sm"
+  style={`max-width: ${width}`}
+  {...(!caption ? { 'aria-label': alt } : {})}
+>
+  <div class="flex items-center justify-center p-4">
+    <slot />
+  </div>
+  {caption && (
+    <figcaption class="border-t border-[var(--color-border)] bg-[var(--color-bg-alt)] px-4 py-2 text-center text-sm text-[var(--color-text-muted)]">
+      {caption}
+    </figcaption>
+  )}
+</figure>

@@ -1,0 +1,35 @@
+---
+interface Props {
+  stageNumber: number;
+  title: string;
+  description: string;
+  href: string;
+  lessonCount: number;
+  color?: string;
+}
+
+const { stageNumber, title, description, href, lessonCount, color } = Astro.props;
+
+const accentStyle = color ? `border-left-color: var(--color-${color}, ${color})` : undefined;
+---
+
+<a
+  href={href}
+  class="group block rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-shadow hover:shadow-md"
+  style={accentStyle ? `border-left-width: 4px; ${accentStyle}` : undefined}
+>
+  <div class="mb-2 flex items-center gap-3">
+    <span
+      class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-bg-alt)] text-sm font-bold"
+    >
+      {stageNumber}
+    </span>
+    <h3 class="text-lg font-semibold group-hover:text-current">{title}</h3>
+  </div>
+
+  <p class="mb-3 text-sm text-[var(--color-text-muted)]">{description}</p>
+
+  <p class="text-xs text-[var(--color-text-muted)]">
+    {lessonCount} {lessonCount === 1 ? 'lesson' : 'lessons'}
+  </p>
+</a>

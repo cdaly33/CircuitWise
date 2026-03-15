@@ -1,0 +1,60 @@
+---
+interface Props {
+  variant: 'banner' | 'inline';
+}
+
+const { variant } = Astro.props;
+const isBanner = variant === 'banner';
+const disclaimerText =
+  'This site is for educational purposes only. It does not replace the advice or services of a licensed electrician.';
+---
+
+{isBanner ? (
+  <div
+    role="alert"
+    class="w-full border-y border-safety/30 bg-yellow-50 px-4 py-3 dark:bg-yellow-950/20"
+  >
+    <div class="mx-auto flex max-w-4xl items-center gap-3">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="size-5 shrink-0 text-safety"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <p class="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+        <span aria-hidden="true">⚠️</span> {disclaimerText}
+      </p>
+    </div>
+  </div>
+) : (
+  <aside
+    role="note"
+    class="my-4 rounded-md border border-safety/30 bg-yellow-50 px-4 py-3 dark:bg-yellow-950/20"
+  >
+    <p class="flex items-start gap-2 text-sm text-yellow-800 dark:text-yellow-200">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="mt-0.5 size-4 shrink-0 text-safety"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <span>
+        <span aria-hidden="true">⚠️</span> {disclaimerText}
+      </span>
+    </p>
+  </aside>
+)}

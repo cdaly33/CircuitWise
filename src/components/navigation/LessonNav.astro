@@ -1,0 +1,38 @@
+---
+interface Props {
+  prev?: { title: string; href: string };
+  next?: { title: string; href: string };
+}
+
+const { prev, next } = Astro.props;
+---
+
+<nav aria-label="Lesson navigation" class="mt-12 border-t border-[var(--color-border)] pt-6">
+  <div class="grid grid-cols-2 gap-4">
+    {/* Previous */}
+    <div>
+      {prev && (
+        <a
+          href={prev.href}
+          class="group flex flex-col rounded-lg border border-[var(--color-border)] p-4 transition-shadow hover:shadow-md"
+        >
+          <span class="text-xs text-[var(--color-text-muted)]">← Previous</span>
+          <span class="text-sm font-medium group-hover:text-[var(--color-current)]">{prev.title}</span>
+        </a>
+      )}
+    </div>
+
+    {/* Next */}
+    <div class="text-right">
+      {next && (
+        <a
+          href={next.href}
+          class="group flex flex-col items-end rounded-lg border border-[var(--color-border)] p-4 transition-shadow hover:shadow-md"
+        >
+          <span class="text-xs text-[var(--color-text-muted)]">Next →</span>
+          <span class="text-sm font-medium group-hover:text-[var(--color-current)]">{next.title}</span>
+        </a>
+      )}
+    </div>
+  </div>
+</nav>

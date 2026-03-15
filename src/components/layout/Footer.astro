@@ -1,0 +1,40 @@
+---
+const quickLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Stages', href: '/stages/' },
+  { label: 'Glossary', href: '/glossary/' },
+  { label: 'Symbols', href: '/symbols/' },
+  { label: 'Reference', href: '/reference/' },
+  { label: 'About', href: '/about/' },
+];
+---
+
+<footer class="border-t border-[var(--color-border)] bg-[var(--color-bg-alt)]">
+  <div class="mx-auto max-w-6xl px-4 py-8">
+    <!-- Quick links -->
+    <nav aria-label="Footer" class="mb-6">
+      <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+        {quickLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Disclaimer -->
+    <p class="mb-4 text-center text-xs text-[var(--color-text-muted)]">
+      ⚠️ This site is for educational purposes only. It does not replace licensed electricians or local codes.
+    </p>
+
+    <!-- Copyright -->
+    <p class="text-center text-xs text-[var(--color-text-muted)]">
+      © 2026 Circuit-Wise. Educational use only.
+    </p>
+  </div>
+</footer>
