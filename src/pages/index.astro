@@ -1,14 +1,15 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DarkModeToggle from '../components/layout/DarkModeToggle.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Circuit-Wise</title>
-  </head>
-  <body>
-    <h1>Circuit-Wise</h1>
-    <p>Coming soon.</p>
-  </body>
-</html>
+<BaseLayout title="Circuit-Wise">
+  <div class="max-w-4xl mx-auto px-4 py-16 text-center">
+    <h1 class="text-4xl font-bold mb-4">⚡ Circuit-Wise</h1>
+    <p class="text-xl text-[var(--color-text-muted)] mb-8">Learn electricity fundamentals from the ground up.</p>
+    <DarkModeToggle />
+    <div class="mt-8 prose mx-auto">
+      <p>This site is under construction. Check back soon for progressive lessons on electricity fundamentals.</p>
+    </div>
+  </div>
+</BaseLayout>

@@ -15,3 +15,200 @@
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
 }
+
+/* Dark mode color scheme custom properties */
+@layer base {
+  :root {
+    --color-bg: #ffffff;
+    --color-bg-alt: #f8fafc;
+    --color-text: #1e293b;
+    --color-text-muted: #64748b;
+    --color-border: #e2e8f0;
+  }
+
+  .dark {
+    --color-bg: #0f172a;
+    --color-bg-alt: #1e293b;
+    --color-text: #f1f5f9;
+    --color-text-muted: #94a3b8;
+    --color-border: #334155;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-property: color, background-color, border-color;
+    transition-duration: 150ms;
+    transition-timing-function: ease-in-out;
+  }
+}
+
+/* Prose styles for lesson MDX content */
+@layer components {
+  .prose {
+    line-height: 1.6;
+    color: var(--color-text);
+    max-width: 72ch;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    font-weight: 700;
+    line-height: 1.25;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    color: var(--color-text);
+  }
+
+  .prose h1 {
+    font-size: 2.25rem;
+    margin-top: 0;
+  }
+
+  .prose h2 {
+    font-size: 1.75rem;
+    padding-bottom: 0.25em;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .prose h3 {
+    font-size: 1.375rem;
+  }
+
+  .prose h4 {
+    font-size: 1.125rem;
+  }
+
+  .prose p {
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .prose a {
+    color: var(--color-current, #3b82f6);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose a:hover {
+    color: #2563eb;
+  }
+
+  .prose strong {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .prose ul,
+  .prose ol {
+    margin-top: 0;
+    margin-bottom: 1em;
+    padding-left: 1.5em;
+  }
+
+  .prose ul {
+    list-style-type: disc;
+  }
+
+  .prose ol {
+    list-style-type: decimal;
+  }
+
+  .prose li {
+    margin-bottom: 0.25em;
+  }
+
+  .prose li > ul,
+  .prose li > ol {
+    margin-top: 0.25em;
+    margin-bottom: 0;
+  }
+
+  .prose code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: 0.25rem;
+    padding: 0.125em 0.375em;
+  }
+
+  .prose pre {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .prose pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  .prose blockquote {
+    border-left: 4px solid var(--color-current, #3b82f6);
+    padding: 0.5em 1em;
+    margin: 0 0 1em;
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-alt);
+    border-radius: 0 0.375rem 0.375rem 0;
+  }
+
+  .prose blockquote p:last-child {
+    margin-bottom: 0;
+  }
+
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    margin-bottom: 1em;
+    font-size: 0.9375rem;
+  }
+
+  .prose th {
+    font-weight: 600;
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .prose td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .prose img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+  }
+
+  .prose hr {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 2em 0;
+  }
+
+  .prose > *:first-child {
+    margin-top: 0;
+  }
+
+  .prose > *:last-child {
+    margin-bottom: 0;
+  }
+}
