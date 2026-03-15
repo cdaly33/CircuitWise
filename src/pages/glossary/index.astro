@@ -76,6 +76,9 @@ const categories = [...new Set(allEntries.map((e) => e.data.category))].sort();
       ))}
     </nav>
 
+    <!-- Live results announcement -->
+    <div id="glossary-results-status" class="sr-only" aria-live="polite" role="status"></div>
+
     <!-- Terms list -->
     <div id="glossary-list">
       {[...grouped.entries()].map(([letter, entries]) => (
@@ -118,8 +121,11 @@ const categories = [...new Set(allEntries.map((e) => e.data.category))].sort();
 
   let activeCategory = 'all';
 
+  const statusEl = document.getElementById('glossary-results-status');
+
   function applyFilters() {
     const query = (searchInput?.value ?? '').toLowerCase().trim();
+    let totalVisible = 0;
 
     sections.forEach((section) => {
       let visibleCount = 0;
@@ -135,8 +141,13 @@ const categories = [...new Set(allEntries.map((e) => e.data.category))].sort();
         if (visible) visibleCount++;
       });
 
+      totalVisible += visibleCount;
       section.style.display = visibleCount > 0 ? '' : 'none';
     });
+
+    if (statusEl) {
+      statusEl.textContent = totalVisible + ' result' + (totalVisible !== 1 ? 's' : '') + ' found';
+    }
   }
 
   searchInput?.addEventListener('input', applyFilters);

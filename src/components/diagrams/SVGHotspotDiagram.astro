@@ -1,7 +1,7 @@
 ---
 /**
- * SVGHotspotDiagram — Interactive SVG with labeled hotspots.
- * TODO: Phase 10 — Add interactive hover/click tooltips for each hotspot.
+ * SVGHotspotDiagram — Interactive SVG diagram with keyboard-navigable tooltips.
+ * Hotspot buttons overlay the SVG; hover/focus shows tooltip with description.
  */
 import DiagramFrame from './DiagramFrame.astro';
 
@@ -9,6 +9,10 @@ interface Hotspot {
   id: string;
   label: string;
   description: string;
+  /** X position as percentage (0–100) of the SVG width */
+  x?: number;
+  /** Y position as percentage (0–100) of the SVG height */
+  y?: number;
 }
 
 interface Props {
@@ -17,16 +21,61 @@ interface Props {
 }
 
 const { alt, hotspots } = Astro.props;
+const diagramId = `svg-hotspot-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
-<div class="my-6">
-  <DiagramFrame alt={alt}>
-    <slot />
-  </DiagramFrame>
+<div class="my-6" id={diagramId}>
+  <div class="hotspot-diagram relative">
+    <DiagramFrame alt={alt}>
+      <slot />
+    </DiagramFrame>
 
-  {/* Hotspot labels list — visible text for accessibility */}
-  {hotspots.length > 0 && (
+    {/* Hotspot overlay buttons — positioned over the SVG via JS or default positions */}
+    {hotspots.map((hs, i) => {
+      const x = hs.x ?? 10 + i * 18;
+      const y = hs.y ?? 10;
+      return (
+        <button
+          type="button"
+          class="hotspot-btn absolute flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-voltage)] text-xs font-bold text-white shadow-md ring-2 ring-white transition-transform hover:scale-125 focus:scale-125 focus:outline-none focus:ring-2 focus:ring-[var(--color-voltage)] focus:ring-offset-2"
+          style={`left: ${x}%; top: ${y}%; transform: translate(-50%, -50%);`}
+          aria-describedby={`tooltip-${hs.id}`}
+          data-hotspot-id={hs.id}
+        >
+          <span aria-hidden="true">{i + 1}</span>
+          <span class="sr-only">{hs.label}</span>
+        </button>
+        <div
+          id={`tooltip-${hs.id}`}
+          role="tooltip"
+          class="hotspot-tooltip pointer-events-none absolute z-50 hidden max-w-xs rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm shadow-lg"
+          style={`left: ${Math.min(x + 3, 75)}%; top: ${Math.max(y - 12, 2)}%;`}
+        >
+          <strong class="block font-semibold text-[var(--color-text)]">{hs.label}</strong>
+          <span class="text-[var(--color-text-muted)]">{hs.description}</span>
+        </div>
+      );
+    })}
+  </div>
+
+  {/* No-JS fallback: hotspot descriptions rendered as a list */}
+  <noscript>
     <ul class="mt-3 space-y-1 px-2">
+      {hotspots.map((hs) => (
+        <li class="flex items-baseline gap-2 text-sm">
+          <span class="inline-block size-2.5 shrink-0 rounded-full bg-current" aria-hidden="true" />
+          <span>
+            <strong class="font-semibold text-[var(--color-text)]">{hs.label}</strong>
+            <span class="text-[var(--color-text-muted)]"> — {hs.description}</span>
+          </span>
+        </li>
+      ))}
+    </ul>
+  </noscript>
+
+  {/* JS-visible list (hidden visually but kept for screen readers) */}
+  {hotspots.length > 0 && (
+    <ul class="mt-3 space-y-1 px-2 js-hotspot-list">
       {hotspots.map((hs) => (
         <li class="flex items-baseline gap-2 text-sm" id={`hotspot-${hs.id}`}>
           <span class="inline-block size-2.5 shrink-0 rounded-full bg-current" aria-hidden="true" />
@@ -39,3 +88,37 @@ const { alt, hotspots } = Astro.props;
     </ul>
   )}
 </div>
+
+<script define:vars={{ diagramId }}>
+  (function () {
+    var container = document.getElementById(diagramId);
+    if (!container) return;
+
+    var buttons = container.querySelectorAll('.hotspot-btn');
+    var tooltips = container.querySelectorAll('.hotspot-tooltip');
+
+    function hideAll() {
+      tooltips.forEach(function (t) { t.classList.add('hidden'); });
+    }
+
+    buttons.forEach(function (btn) {
+      var id = btn.getAttribute('data-hotspot-id');
+      var tip = document.getElementById('tooltip-' + id);
+      if (!tip) return;
+
+      function show() { hideAll(); tip.classList.remove('hidden'); }
+      function hide() { tip.classList.add('hidden'); }
+
+      btn.addEventListener('mouseenter', show);
+      btn.addEventListener('mouseleave', hide);
+      btn.addEventListener('focus', show);
+      btn.addEventListener('blur', hide);
+      btn.addEventListener('click', function () {
+        if (tip.classList.contains('hidden')) { show(); } else { hide(); }
+      });
+      btn.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') hide();
+      });
+    });
+  })();
+</script>

@@ -42,7 +42,9 @@ export class ProgressTracker {
     const state = this.getState();
     if (!state.skippedStages.includes(stageNumber)) {
       state.skippedStages.push(stageNumber);
-      state.completedStages.push(stageNumber);
+      if (!state.completedStages.includes(stageNumber)) {
+        state.completedStages.push(stageNumber);
+      }
       this.saveState(state);
     }
   }
@@ -53,6 +55,11 @@ export class ProgressTracker {
 
   isStageComplete(stageNumber: number): boolean {
     return this.getState().completedStages.includes(stageNumber);
+  }
+
+  /** Count how many lessons matching a prefix are completed. */
+  countCompletedLessonsForStage(stagePrefix: string): number {
+    return this.getState().completedLessons.filter((id) => id.startsWith(stagePrefix)).length;
   }
 
   setCurrentLesson(lessonId: string): void {

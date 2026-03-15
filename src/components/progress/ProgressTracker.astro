@@ -1,19 +1,113 @@
 ---
 /**
- * ProgressTracker component — Stub for Phase 4.
- *
- * This component will render a visual progress indicator for lessons and stages.
- * Full implementation in Phase 10 will:
- *  - Read progress from localStorage via src/lib/progress.ts
- *  - Display completed/in-progress/locked lesson states
- *  - Show overall stage completion percentage
- *  - Integrate with SkipQuiz for stage-skip functionality
- *
- * For now, the ProgressTracker class logic lives in src/lib/progress.ts.
+ * ProgressTracker — "Mark as Complete" button for lesson pages.
+ * Reads/writes progress via localStorage (src/lib/progress.ts).
+ * When all lessons in a stage are marked complete the stage is auto-completed.
  */
+interface Props {
+  lessonId: string;
+  stageNumber: number;
+  totalLessonsInStage: number;
+}
+
+const { lessonId, stageNumber, totalLessonsInStage } = Astro.props;
+const stagePrefix = `stage-${stageNumber}/`;
 ---
 
-<!-- ProgressTracker UI placeholder — will be enhanced in Phase 10 -->
-<div class="progress-tracker" data-component="progress-tracker">
-  <slot />
+<div
+  class="progress-tracker mt-10 border-t border-[var(--color-border)] pt-6"
+  data-component="progress-tracker"
+  data-lesson-id={lessonId}
+  data-stage-number={stageNumber}
+  data-total-lessons={totalLessonsInStage}
+  data-stage-prefix={stagePrefix}
+>
+  <noscript>
+    <p class="text-sm text-[var(--color-text-muted)]">
+      Enable JavaScript to track your lesson progress.
+    </p>
+  </noscript>
+
+  <!-- Hidden by default; shown by JS -->
+  <button
+    type="button"
+    id={`pt-btn-${lessonId}`}
+    class="hidden items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-voltage)] focus:ring-offset-2"
+    aria-live="polite"
+  >
+    Mark as Complete ✓
+  </button>
+
+  <p
+    id={`pt-status-${lessonId}`}
+    class="hidden text-sm font-semibold text-green-600 dark:text-green-400"
+    aria-live="polite"
+  >
+    ✓ Completed
+  </p>
+
+  <p
+    id={`pt-stage-status-${lessonId}`}
+    class="mt-2 hidden text-sm font-semibold text-[var(--color-voltage)]"
+    aria-live="polite"
+  ></p>
 </div>
+
+<script define:vars={{ lessonId, stageNumber, totalLessonsInStage, stagePrefix }}>
+  (function () {
+    const STORAGE_KEY = 'circuit-wise-progress';
+
+    function getState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : { completedLessons: [], completedStages: [], skippedStages: [], currentLesson: null };
+      } catch {
+        return { completedLessons: [], completedStages: [], skippedStages: [], currentLesson: null };
+      }
+    }
+
+    function saveState(s) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+    }
+
+    const btn = document.getElementById('pt-btn-' + lessonId);
+    const status = document.getElementById('pt-status-' + lessonId);
+    const stageStatus = document.getElementById('pt-stage-status-' + lessonId);
+    if (!btn || !status) return;
+
+    const state = getState();
+    const alreadyDone = state.completedLessons.includes(lessonId);
+
+    if (alreadyDone) {
+      status.classList.remove('hidden');
+      status.classList.add('flex');
+    } else {
+      btn.classList.remove('hidden');
+      btn.classList.add('inline-flex', 'bg-[var(--color-voltage)]', 'text-white', 'hover:opacity-90');
+
+      btn.addEventListener('click', function () {
+        const s = getState();
+        if (!s.completedLessons.includes(lessonId)) {
+          s.completedLessons.push(lessonId);
+        }
+
+        // Check if all lessons in stage are now complete
+        const stageDone = s.completedLessons.filter(function (id) { return id.startsWith(stagePrefix); }).length;
+        if (stageDone >= totalLessonsInStage && !s.completedStages.includes(stageNumber)) {
+          s.completedStages.push(stageNumber);
+          if (stageStatus) {
+            stageStatus.textContent = '🎉 Stage ' + stageNumber + ' complete!';
+            stageStatus.classList.remove('hidden');
+          }
+        }
+
+        saveState(s);
+
+        btn.classList.add('hidden');
+        btn.classList.remove('inline-flex');
+        status.classList.remove('hidden');
+        status.classList.add('flex');
+      });
+    }
+  })();
+</script>

@@ -1,0 +1,156 @@
+---
+/**
+ * WattageCalculator — Interactive power calculator (P = V × I).
+ * Also shows P = I²R and P = V²/R when resistance is known.
+ * Concept colors: Voltage (red), Current (blue), Resistance (orange), Power (purple).
+ */
+---
+
+<div class="wattage-calculator my-6 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-alt)] p-5">
+  <noscript>
+    <div class="space-y-3 text-sm">
+      <h3 class="text-lg font-bold text-[var(--color-text)]">Power Formulas</h3>
+      <ul class="list-disc space-y-1 pl-5 text-[var(--color-text-muted)]">
+        <li><strong class="text-purple-600">P</strong> = <strong class="text-red-600">V</strong> × <strong class="text-blue-600">I</strong> — Power equals Voltage times Current</li>
+        <li><strong class="text-purple-600">P</strong> = <strong class="text-blue-600">I</strong>² × <strong class="text-orange-500">R</strong> — Power equals Current squared times Resistance</li>
+        <li><strong class="text-purple-600">P</strong> = <strong class="text-red-600">V</strong>² ÷ <strong class="text-orange-500">R</strong> — Power equals Voltage squared divided by Resistance</li>
+      </ul>
+      <p class="text-[var(--color-text-muted)]"><strong>Example:</strong> If V = 12V and I = 2A, then P = 12 × 2 = <strong class="text-purple-600">24W</strong></p>
+    </div>
+  </noscript>
+
+  <form id="watt-calc-form" class="watt-calc-js space-y-4" novalidate>
+    <fieldset class="space-y-3">
+      <legend class="text-lg font-bold text-[var(--color-text)]">💡 Power (Wattage) Calculator</legend>
+      <p class="text-sm text-[var(--color-text-muted)]">Enter Voltage and Current to calculate Power. Optionally add Resistance for extra formulas.</p>
+
+      <div class="grid gap-3 sm:grid-cols-3">
+        <div>
+          <label for="watt-voltage" class="mb-1 block text-sm font-semibold text-red-600 dark:text-red-400">
+            Voltage (V)
+          </label>
+          <input
+            type="number"
+            id="watt-voltage"
+            name="voltage"
+            min="0"
+            step="any"
+            placeholder="e.g. 12"
+            class="w-full rounded-lg border border-red-300 bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-red-400"
+          />
+        </div>
+        <div>
+          <label for="watt-current" class="mb-1 block text-sm font-semibold text-blue-600 dark:text-blue-400">
+            Current (I) — Amps
+          </label>
+          <input
+            type="number"
+            id="watt-current"
+            name="current"
+            min="0"
+            step="any"
+            placeholder="e.g. 2"
+            class="w-full rounded-lg border border-blue-300 bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div>
+          <label for="watt-resistance" class="mb-1 block text-sm font-semibold text-orange-500 dark:text-orange-400">
+            Resistance (R) — Ohms <span class="font-normal text-[var(--color-text-muted)]">(optional)</span>
+          </label>
+          <input
+            type="number"
+            id="watt-resistance"
+            name="resistance"
+            min="0"
+            step="any"
+            placeholder="e.g. 6"
+            class="w-full rounded-lg border border-orange-300 bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-orange-400"
+          />
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button
+          type="submit"
+          class="rounded-lg bg-[var(--color-voltage)] px-5 py-2 text-sm font-semibold text-white transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--color-voltage)] focus:ring-offset-2"
+        >
+          Calculate
+        </button>
+        <button
+          type="reset"
+          class="rounded-lg border border-[var(--color-border)] px-4 py-2 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--color-border)]"
+        >
+          Clear
+        </button>
+      </div>
+    </fieldset>
+
+    <div
+      id="watt-result"
+      class="hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 text-sm"
+      aria-live="polite"
+      role="status"
+    ></div>
+  </form>
+</div>
+
+<script>
+  (function () {
+    const form = document.getElementById('watt-calc-form') as HTMLFormElement | null;
+    const resultEl = document.getElementById('watt-result');
+    if (!form || !resultEl) return;
+
+    function round(n: number): string {
+      return parseFloat(n.toFixed(4)).toString();
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const vEl = form.querySelector<HTMLInputElement>('#watt-voltage');
+      const iEl = form.querySelector<HTMLInputElement>('#watt-current');
+      const rEl = form.querySelector<HTMLInputElement>('#watt-resistance');
+      if (!vEl || !iEl || !rEl) return;
+
+      const v = vEl.value ? parseFloat(vEl.value) : NaN;
+      const i = iEl.value ? parseFloat(iEl.value) : NaN;
+      const r = rEl.value ? parseFloat(rEl.value) : NaN;
+
+      resultEl.classList.remove('hidden');
+
+      if (isNaN(v) || isNaN(i)) {
+        resultEl.innerHTML = '<span class="text-red-600">Please enter both Voltage and Current.</span>';
+        return;
+      }
+
+      if (v < 0 || i < 0 || (!isNaN(r) && r < 0)) {
+        resultEl.innerHTML = '<span class="text-red-600">Values must be positive numbers.</span>';
+        return;
+      }
+
+      const p = v * i;
+      const lines: string[] = [];
+
+      lines.push(
+        `<strong class="text-purple-600">P</strong> = <strong class="text-red-600">V</strong> × <strong class="text-blue-600">I</strong> = ${round(v)}V × ${round(i)}A = <strong class="text-purple-600">${round(p)}W</strong>`
+      );
+
+      if (!isNaN(r) && r > 0) {
+        const pir = i * i * r;
+        const pvr = (v * v) / r;
+        lines.push(
+          `<strong class="text-purple-600">P</strong> = <strong class="text-blue-600">I</strong>² × <strong class="text-orange-500">R</strong> = ${round(i)}² × ${round(r)}Ω = <strong class="text-purple-600">${round(pir)}W</strong>`
+        );
+        lines.push(
+          `<strong class="text-purple-600">P</strong> = <strong class="text-red-600">V</strong>² ÷ <strong class="text-orange-500">R</strong> = ${round(v)}² ÷ ${round(r)}Ω = <strong class="text-purple-600">${round(pvr)}W</strong>`
+        );
+      }
+
+      resultEl.innerHTML = lines.join('<br/>');
+    });
+
+    form.addEventListener('reset', function () {
+      resultEl.classList.add('hidden');
+      resultEl.innerHTML = '';
+    });
+  })();
+</script>
