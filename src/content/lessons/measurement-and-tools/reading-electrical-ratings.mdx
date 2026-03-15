@@ -1,0 +1,140 @@
+---
+title: "Reading Electrical Ratings"
+stage: 4
+stageSlug: "measurement-and-tools"
+lessonNumber: 5
+description: "Understand voltage, amperage, and wattage ratings on devices and outlets."
+keyTerms: ["watt", "volt", "amp"]
+difficulty: "beginner"
+estimatedMinutes: 6
+draft: false
+---
+
+## Why This Matters
+
+Every electrical device has a label or stamp telling you its electrical requirements. Every outlet, breaker, and wire has a rating too. Understanding these numbers keeps you safe and helps you avoid overloads, blown fuses, and damaged equipment. If you can read a nameplate, you can figure out whether a device is safe to plug in.
+
+## What "120V 15A" Means on an Outlet
+
+Look at a standard US household outlet and you'll find markings like **120V 15A**. Here's what that tells you:
+
+- **120V** — the outlet provides 120 volts of AC power
+- **15A** — the circuit can safely handle up to 15 amps of current
+
+To find the maximum wattage: **120V × 15A = 1,800 watts**
+
+That doesn't mean you should run 1,800 watts continuously — the **National Electrical Code** recommends loading a circuit to no more than **80%** of its rating for continuous loads. That's **1,440 watts** on a 15A circuit.
+
+## Wattage Ratings on Appliances
+
+Every appliance has a **wattage rating** that tells you how much power it uses:
+
+| Appliance | Typical Wattage |
+|-----------|----------------|
+| LED light bulb | 8–15 W |
+| Laptop charger | 45–100 W |
+| Microwave | 600–1,200 W |
+| Hair dryer | 1,000–1,875 W |
+| Space heater | 1,500 W |
+| Electric oven | 2,000–5,000 W |
+
+High-wattage appliances draw more current. A 1,500W space heater on a 120V circuit draws **12.5 amps** — that's a lot of the 15A budget already spoken for.
+
+## Understanding Nameplate Data
+
+The **nameplate** (or data plate) is the label on a device listing its electrical specifications. Here's how to read a typical one:
+
+```
+Model: XYZ-2000
+Input: 120V AC, 60Hz
+Power: 1500W
+Current: 12.5A
+```
+
+- **Input voltage (120V AC)** — what power supply the device needs
+- **Frequency (60Hz)** — standard US power frequency (50Hz in much of the rest of the world)
+- **Power (1500W)** — how much power the device consumes
+- **Current (12.5A)** — how much current it draws
+
+Some devices list a **voltage range** like "100–240V" — these are universal devices (like laptop chargers) that work on different power systems worldwide.
+
+### Motor Nameplates
+
+Motors have additional ratings:
+
+- **HP** — horsepower, the mechanical output
+- **FLA** (Full Load Amps) — the current draw when running at full capacity
+- **LRA** (Locked Rotor Amps) — the surge current when the motor first starts (can be 5–7× higher than FLA)
+
+Knowing the FLA is crucial for sizing the breaker and wiring correctly.
+
+## Don't Exceed Ratings
+
+Exceeding a circuit's rating is called an **overload**. Here's what happens:
+
+1. You plug too many high-wattage devices into one circuit
+2. The total current exceeds the wire and breaker rating
+3. The wires heat up beyond their safe temperature
+4. The **breaker trips** (or a fuse blows) to protect the wiring
+
+The breaker is doing its job — it's protecting your wiring from overheating and potentially starting a fire. The fix isn't a bigger breaker — it's spreading your loads across multiple circuits or reducing what you have plugged in.
+
+### Quick Overload Check
+
+Add up the wattage of everything on the circuit and divide by the voltage:
+
+**Total amps = Total watts ÷ Voltage**
+
+If the result is close to or exceeds the breaker rating, you're at risk of an overload.
+
+## Real World Example
+
+You're setting up a home office on a single 15A, 120V circuit. Your equipment:
+
+- Desktop computer: 300W
+- Two monitors: 50W each
+- Desk lamp: 15W
+- Laser printer: 600W
+- Space heater: 1,500W
+
+Total: **2,515W** → 2,515 ÷ 120 = **21A**
+
+That's way over the 15A limit. The breaker will trip the moment the printer and heater run at the same time. Solution: move the space heater to a different circuit, or better yet, use a dedicated circuit for the heater.
+
+## Common Beginner Mistake
+
+Ignoring the **80% rule** for continuous loads. Just because a breaker is rated at 15A doesn't mean you should run 14.9A through it all day. Continuous loads (running for 3+ hours) should stay at or below **80%** of the breaker rating — that's 12A on a 15A breaker, or 16A on a 20A breaker. Exceeding this causes nuisance tripping and stresses the wiring.
+
+## Key Terms
+
+- **Watt (W):** Unit of electrical power — how much energy a device uses per second
+- **Volt (V):** Unit of electrical pressure — the voltage a device requires
+- **Amp (A):** Unit of electrical current — how much current a device draws
+
+## Exercise
+
+A kitchen has a 20A, 120V circuit. You want to run a microwave (1,100W) and a toaster (850W) at the same time. Can the circuit handle it safely using the 80% rule?
+
+
+
+<details>
+<summary>Show Answer</summary>
+
+**Total wattage:** 1,100 + 850 = **1,950W**
+
+**Total amps:** 1,950 ÷ 120 = **16.25A**
+
+**80% of 20A:** 20 × 0.80 = **16A**
+
+At 16.25A, you slightly exceed the 80% continuous load guideline. It will probably work for short use (making toast), but it's not ideal. If these appliances run frequently together, they should be on separate circuits.
+
+
+</details>
+
+## Recap
+
+- Outlet ratings like **120V 15A** tell you the voltage and maximum current capacity.
+- Always check **wattage ratings** on appliances to know their power consumption.
+- **Nameplates** provide voltage, current, power, and frequency information.
+- Never exceed a circuit's rating — use the **80% rule** for continuous loads.
+- Add up total watts and divide by voltage to check if a circuit can handle your loads.

@@ -1,0 +1,106 @@
+---
+title: "Transistors"
+stage: 5
+stageSlug: "electrical-components"
+lessonNumber: 5
+description: "Learn how transistors work as electronic switches and amplifiers."
+keyTerms: ["transistor"]
+difficulty: "advanced"
+estimatedMinutes: 8
+draft: false
+---
+
+## Why This Matters
+
+The transistor is arguably the most important invention of the 20th century. It's the building block of every computer, smartphone, and digital device on the planet. A modern processor chip contains **billions** of transistors, each one acting as a tiny switch that turns on or off to process information. Understanding the basic concept of a transistor gives you insight into how all digital technology works.
+
+## Electronic Switches
+
+At its simplest, a transistor is an **electronic switch** — a small signal on one pin controls a larger current flowing between the other two pins.
+
+Imagine a water faucet. A small twist of your wrist (small effort) controls a large flow of water (large output). A transistor works the same way: a small electrical signal controls a much larger electrical current.
+
+This ability to use a tiny signal to control a big one is what makes transistors so powerful. They can:
+
+- **Switch things on and off** — like turning an LED, motor, or relay on with a microcontroller signal
+- **Amplify signals** — make a weak audio signal from a microphone strong enough to drive a speaker
+
+## How They Work (Simplified)
+
+A transistor is made from semiconductor material (usually silicon) with three layers and three terminals. The two main types are:
+
+### NPN Transistors
+
+- **Three pins:** Base (B), Collector (C), Emitter (E)
+- A small current into the **Base** allows a large current to flow from **Collector to Emitter**
+- Think of it as: "A trickle into the base opens the floodgates from collector to emitter"
+- The most common type in general circuits
+
+### PNP Transistors
+
+- Same three pins, but the current directions are reversed
+- A small current **out of** the Base allows current to flow from **Emitter to Collector**
+- Used in specific circuit configurations, often paired with NPN transistors
+
+For beginners, focus on NPN — it's what you'll encounter most often.
+
+### The Key Idea
+
+No base current → transistor is OFF → no current flows (like an open switch)
+
+Small base current → transistor is ON → large current flows (like a closed switch)
+
+This on/off behavior is exactly how digital logic works. Each transistor represents a **1** (on) or **0** (off). Combine billions of them, and you have a computer.
+
+## The Foundation of Digital Electronics
+
+Every logic gate (AND, OR, NOT) is built from transistors. Every processor, memory chip, and digital sensor is built from logic gates. The entire digital world — from your calculator to cloud servers — runs on transistors switching on and off billions of times per second.
+
+The history is remarkable:
+
+- **1947:** First transistor invented at Bell Labs
+- **1971:** Intel 4004 processor — 2,300 transistors
+- **2020s:** Modern processors — over 10 billion transistors on a chip smaller than your fingernail
+
+## Where Transistors Are Used
+
+- **Amplifiers:** Audio amplifiers boost weak signals to drive speakers
+- **Switching:** Microcontrollers use transistors to control motors, relays, and high-power devices
+- **Logic gates:** The fundamental building blocks of digital circuits
+- **Computers:** Processors and memory are made entirely of transistors
+- **Voltage regulation:** Transistors in voltage regulators maintain steady output
+- **Oscillators:** Transistors generate clock signals and radio frequencies
+
+## Real World Example
+
+When you press a button on a TV remote, a microcontroller sends a tiny signal (a few milliamps) to a transistor. That transistor switches on an infrared LED at much higher current, creating the bright IR flash that the TV can detect across the room. The microcontroller alone couldn't power the LED brightly enough — the transistor amplifies its ability by acting as a switch between the low-power control signal and the higher-power LED circuit.
+
+## Common Beginner Mistake
+
+Forgetting the **base resistor**. Connecting a signal directly to a transistor's base without a resistor can allow too much base current, damaging the transistor or the signal source. Always use a resistor (typically 1 kΩ–10 kΩ) between the signal source and the base to limit current to a safe level.
+
+## Key Terms
+
+- **Transistor:** A semiconductor device with three terminals that uses a small signal to control a larger current — the fundamental building block of digital electronics
+
+## Exercise
+
+A microcontroller outputs 3.3V and you want to use it to switch on a 12V DC motor using an NPN transistor. Why can't you just connect the microcontroller output directly to the motor?
+
+
+
+<details>
+<summary>Show Answer</summary>
+
+The microcontroller can only supply a few milliamps — far too little to drive a motor that might need hundreds of milliamps or more. Instead, the microcontroller signal goes to the **base** of an NPN transistor (through a base resistor). The transistor then switches the 12V motor power from **collector to emitter**. The small base current from the microcontroller controls the large motor current through the transistor. You'd also add a **flyback diode** across the motor to protect the transistor from voltage spikes.
+
+
+</details>
+
+## Recap
+
+- Transistors are **electronic switches** — a small signal controls a larger current.
+- **NPN transistors** are the most common: current into the base opens the collector-to-emitter path.
+- Transistors are the building blocks of **all digital electronics** — logic gates, processors, and memory.
+- Modern processors contain **billions** of transistors on a single chip.
+- Always use a **base resistor** to protect the transistor and signal source.

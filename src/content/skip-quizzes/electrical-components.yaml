@@ -1,0 +1,47 @@
+stageSlug: "electrical-components"
+passingScore: 4
+questions:
+  - question: "What is the primary function of a resistor?"
+    options:
+      - "Store energy in a magnetic field"
+      - "Limit current flow in a circuit"
+      - "Convert AC to DC"
+      - "Amplify weak signals"
+    correctIndex: 1
+    explanation: "A resistor limits (restricts) the flow of electric current through a circuit, creating a voltage drop."
+
+  - question: "Which component stores energy in an electric field between two plates?"
+    options:
+      - "Inductor"
+      - "Transformer"
+      - "Capacitor"
+      - "Transistor"
+    correctIndex: 2
+    explanation: "A capacitor stores energy in the electric field between two conductive plates separated by an insulating dielectric."
+
+  - question: "What makes a diode different from a regular wire?"
+    options:
+      - "It has higher resistance"
+      - "It only allows current to flow in one direction"
+      - "It stores energy when powered off"
+      - "It amplifies the signal passing through it"
+    correctIndex: 1
+    explanation: "A diode is a one-way valve for electricity — it allows current to flow from anode to cathode but blocks it in the reverse direction."
+
+  - question: "Why do transformers only work with AC and not DC?"
+    options:
+      - "DC voltage is too low for transformers"
+      - "Transformers need changing current to create a changing magnetic field for induction"
+      - "DC would melt the transformer core"
+      - "Transformers can work with DC but are less efficient"
+    correctIndex: 1
+    explanation: "Electromagnetic induction requires a changing magnetic field. AC current constantly changes direction, creating the changing field needed. DC is steady and produces no induction."
+
+  - question: "What should you NEVER do when a circuit breaker keeps tripping?"
+    options:
+      - "Check what is plugged into the circuit"
+      - "Move devices to different circuits"
+      - "Replace the breaker with a higher-rated one"
+      - "Look for signs of a short circuit"
+    correctIndex: 2
+    explanation: "Never upsize a breaker — it's sized to protect the wiring. A higher-rated breaker allows the wires to overheat, creating a fire hazard. Find and fix the cause of the overcurrent instead."

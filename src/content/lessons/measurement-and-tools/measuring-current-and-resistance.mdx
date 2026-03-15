@@ -1,0 +1,128 @@
+---
+title: "Measuring Current and Resistance"
+stage: 4
+stageSlug: "measurement-and-tools"
+lessonNumber: 4
+description: "Learn how to safely measure current and resistance with a multimeter."
+keyTerms: ["current", "resistance", "continuity"]
+difficulty: "intermediate"
+estimatedMinutes: 8
+draft: false
+---
+
+## Why This Matters
+
+Voltage tells you the pressure. But sometimes you need to know how much electricity is actually flowing (current) or how much opposition a component provides (resistance). These measurements help you verify that a circuit is working correctly, find faulty components, and troubleshoot problems that voltage alone can't reveal.
+
+## Measuring Current
+
+### How It Works — In Series
+
+Unlike voltage (which is measured in parallel), current must be measured **in series**. That means you have to **break the circuit open** and route the current through your meter so it can count the electrons passing through.
+
+Think of it like a turnstile at a stadium entrance. To count how many people are entering, you have to make everyone pass through the turnstile. You can't count from across the street.
+
+### Setting Up
+
+1. **Turn off the circuit** before connecting
+2. Plug the **black probe into COM**
+3. Plug the **red probe into the correct jack:**
+   - **mA jack** for small currents (under ~200–400 mA, depending on your meter)
+   - **10A jack** for larger currents
+4. Turn the dial to the **A** (amps) setting — DC amps for DC circuits, AC amps for AC circuits
+5. Break the circuit at the point where you want to measure
+6. Connect the meter probes across the break (so current flows through the meter)
+7. Turn the circuit back on and read the display
+
+### Why Current Measurement Is Less Common
+
+In practice, electricians don't measure current with a basic multimeter very often. Breaking a circuit open is inconvenient and potentially dangerous on high-current circuits. Instead, professionals often use a **clamp meter**, which measures current by clamping around a wire — no need to break the circuit. But understanding the concept of series measurement is essential.
+
+## Measuring Resistance
+
+### How It Works — Power Off
+
+Resistance is measured with the circuit **completely de-energized**. The multimeter sends a tiny known current through the component and measures the voltage drop to calculate resistance using Ohm's Law.
+
+If you try to measure resistance on a live circuit, the external voltage will interfere with the meter's internal signal, giving you a meaningless reading — and potentially damaging the meter.
+
+### Setting Up
+
+1. **Turn off power** to the circuit and disconnect the component if possible
+2. Plug the **black probe into COM**
+3. Plug the **red probe into VΩmA**
+4. Turn the dial to **Ω** (ohms)
+5. Touch the probes to either end of the component
+6. Read the resistance value on the display
+
+### Interpreting Results
+
+- **A specific value** (like 470 Ω) means the component has that much resistance
+- **OL (overload)** means infinite resistance — the circuit is open (broken)
+- **0 Ω or near-zero** means very little resistance — a direct connection or short
+
+## Continuity Testing
+
+**Continuity** means there's a complete path for current to flow. A continuity test is really just a resistance test with an added feature: the meter **beeps** when resistance is very low (typically under 50 Ω).
+
+This is incredibly useful for quickly checking:
+
+- **Is this wire broken?** Touch probes to both ends — beep means it's good, silence means it's broken
+- **Is this fuse blown?** Beep means good, no beep means blown
+- **Are these two points connected?** Beep means yes
+
+To use continuity mode, turn the dial to the **continuity symbol** (looks like a sound wave or a dot with arcs). Make sure the circuit is powered off first.
+
+## Why You'd Check Resistance
+
+Resistance measurements help with troubleshooting in several ways:
+
+- **Verify a component:** Check that a resistor matches its labeled value
+- **Find a break:** An open wire reads as infinite resistance (OL)
+- **Find a short:** Two points that shouldn't be connected reading near 0 Ω
+- **Test insulation:** Wiring insulation should have very high resistance (megaohms)
+- **Check heating elements:** A toaster or oven element should have a specific resistance — if it reads OL, the element is burned out
+
+## Real World Example
+
+A ceiling fan stopped working. You've already checked that the outlet has voltage — it does. Now you suspect the fan's motor winding might be broken. You unplug the fan, set your meter to continuity, and touch the probes to the motor leads. Silence — no beep. The winding is open (broken wire inside the motor). Without measuring resistance, you might have spent hours checking switches and wiring before finding the real problem.
+
+## Common Beginner Mistake
+
+Measuring resistance on a **live circuit** is the classic error. The meter shows a random, fluctuating number, and beginners sometimes trust that reading. Always verify the circuit is **de-energized** before measuring resistance or continuity. If your reading seems strange, double-check that there's no power present.
+
+## Key Terms
+
+- **Current:** The flow of electricity through a circuit, measured in amps (A)
+- **Resistance:** Opposition to current flow, measured in ohms (Ω)
+- **Continuity:** A complete, unbroken path for current flow — tested by checking for very low resistance
+
+## Exercise
+
+You have a power strip that isn't working. The outlet it's plugged into reads 120V. How would you use resistance and continuity testing to diagnose the power strip?
+
+
+
+<details>
+<summary>Show Answer</summary>
+
+1. **Unplug** the power strip from the wall
+2. Turn it **on** (so the internal switch completes the circuit)
+3. Set your meter to **continuity mode**
+4. Touch one probe to a prong on the plug and the other to the corresponding slot on one of the strip's outlets
+5. If you hear a **beep**, that path is complete and the strip should work for that connection
+6. If there's **no beep**, the internal wiring or switch is broken
+7. Test both the hot and neutral paths separately
+
+You can also check the **fuse** inside the power strip (if it has one) by testing continuity across it.
+
+
+</details>
+
+## Recap
+
+- Current is measured **in series** — the circuit must be broken to insert the meter.
+- Resistance is measured with power **off** — never measure resistance on a live circuit.
+- **Continuity testing** checks for a complete path and beeps when the connection is good.
+- Resistance measurements help find broken wires, blown fuses, shorted connections, and faulty components.
+- For everyday current measurements, professionals often use a **clamp meter** instead of breaking the circuit.

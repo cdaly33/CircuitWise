@@ -1,0 +1,47 @@
+stageSlug: "measurement-and-tools"
+passingScore: 4
+questions:
+  - question: "What unit measures electrical pressure (potential difference)?"
+    options:
+      - "Amp"
+      - "Ohm"
+      - "Volt"
+      - "Watt"
+    correctIndex: 2
+    explanation: "Voltage, measured in volts (V), is the electrical pressure that pushes current through a circuit."
+
+  - question: "What mode should your multimeter be set to when measuring a wall outlet?"
+    options:
+      - "DC Voltage"
+      - "AC Voltage"
+      - "Resistance"
+      - "Continuity"
+    correctIndex: 1
+    explanation: "Wall outlets provide alternating current (AC), so you must set the multimeter to AC voltage mode."
+
+  - question: "How is voltage measured in a circuit?"
+    options:
+      - "In series — the circuit must be broken"
+      - "In parallel — across the two points being tested"
+      - "With the power off only"
+      - "By connecting both probes to the same point"
+    correctIndex: 1
+    explanation: "Voltage is measured in parallel by placing the probes across the component or source you want to measure."
+
+  - question: "Why must the circuit be powered off before measuring resistance?"
+    options:
+      - "The meter needs no battery for resistance mode"
+      - "Resistance can only be measured in milliohms"
+      - "External voltage interferes with the meter's internal signal and gives false readings"
+      - "Resistance readings are always zero on a live circuit"
+    correctIndex: 2
+    explanation: "The multimeter sends its own small signal to measure resistance. External voltage from a live circuit interferes with this and produces meaningless readings."
+
+  - question: "A device is rated '120V, 10A'. What is its maximum power consumption?"
+    options:
+      - "12 watts"
+      - "130 watts"
+      - "1,200 watts"
+      - "12,000 watts"
+    correctIndex: 2
+    explanation: "Power = Voltage × Current. 120V × 10A = 1,200 watts."

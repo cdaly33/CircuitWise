@@ -1,0 +1,118 @@
+---
+title: "Transformers"
+stage: 5
+stageSlug: "electrical-components"
+lessonNumber: 7
+description: "Learn how transformers change voltage levels using electromagnetic induction."
+keyTerms: ["transformer"]
+difficulty: "intermediate"
+estimatedMinutes: 8
+draft: false
+---
+
+## Why This Matters
+
+Transformers are the reason electricity can be delivered efficiently across hundreds of miles from power plants to your home. They're also inside every phone charger, laptop adapter, and doorbell system. Without transformers, our entire electrical grid would be impractical. Understanding how they work gives you a window into one of the most important inventions in electrical engineering.
+
+## What Transformers Do
+
+A **transformer** changes voltage levels — stepping voltage up or stepping it down — while keeping the power roughly the same. It takes AC electricity at one voltage and outputs AC electricity at a different voltage.
+
+- **Step-up transformer:** Increases voltage (e.g., 120V → 480V)
+- **Step-down transformer:** Decreases voltage (e.g., 120V → 12V)
+
+Think of it like a gear system on a bicycle. The gears don't create energy — they trade speed for torque (or vice versa). A transformer trades voltage for current: if voltage goes up, current goes down proportionally, and the total power stays about the same.
+
+## How They Work
+
+A transformer uses **electromagnetic induction** between two coils of wire wound around a shared iron core:
+
+### The Two Coils
+
+- **Primary winding:** Connected to the input power source
+- **Secondary winding:** Connected to the output (the load)
+
+### The Process
+
+1. AC current flows through the primary coil
+2. This creates a **changing magnetic field** in the iron core
+3. The changing magnetic field passes through the secondary coil
+4. This **induces a voltage** in the secondary coil (electromagnetic induction)
+5. The output voltage depends on the **ratio of turns** between the two coils
+
+### The Turns Ratio
+
+The voltage ratio equals the turns ratio:
+
+**V_secondary / V_primary = N_secondary / N_primary**
+
+- **More turns on the secondary** → voltage goes **up** (step-up)
+- **Fewer turns on the secondary** → voltage goes **down** (step-down)
+
+**Example:** A transformer with 1,000 turns on the primary and 100 turns on the secondary has a 10:1 ratio. If 120V goes in, 12V comes out.
+
+## Step-Up vs Step-Down
+
+| Type | Turns Ratio | Voltage Change | Current Change | Use |
+|------|------------|----------------|----------------|-----|
+| Step-up | Secondary > Primary | Increases | Decreases | Power transmission |
+| Step-down | Secondary < Primary | Decreases | Increases | Home devices |
+
+Remember: **power in ≈ power out** (minus small losses). If voltage doubles, current halves. This is why transformers are efficient — they don't waste much energy.
+
+## Why AC Is Required
+
+Transformers **only work with AC** (alternating current). Here's why:
+
+- Electromagnetic induction requires a **changing** magnetic field
+- AC current is constantly changing direction, which creates a constantly changing magnetic field
+- DC current is steady — it creates a static magnetic field, which doesn't induce any voltage in the secondary coil
+
+This is the primary reason the world uses AC for power distribution, not DC. AC can be easily transformed to different voltage levels. This was the key advantage in the famous "War of Currents" between Edison (DC) and Tesla/Westinghouse (AC) — and AC won.
+
+## Where Transformers Are Used
+
+- **Power grid:** Step-up transformers at power plants boost voltage to 115,000–765,000V for efficient long-distance transmission. Step-down transformers at substations reduce it to 120/240V for homes.
+- **Phone chargers:** A tiny transformer (or switching supply) converts 120V AC to 5V DC
+- **Doorbells:** A small transformer steps 120V down to 16V or 24V for the button and chime
+- **Utility poles:** Those cylindrical cans on power poles are transformers stepping voltage down from distribution lines to household levels
+- **Welding machines:** Transformers provide the high current needed to melt metal
+- **Audio equipment:** Isolation and impedance-matching transformers in professional audio systems
+
+## Real World Example
+
+Those gray, cylindrical cans you see on utility poles? Those are **distribution transformers**. They take the medium-voltage power from the distribution lines (typically 4,800V–34,500V) and step it down to the **120/240V** that enters your home. A single pole-mounted transformer might serve 5–10 homes. Without these transformers on every block, the power company couldn't deliver usable voltage to your outlets.
+
+## Common Beginner Mistake
+
+Trying to use a transformer with DC. Connecting a battery (DC) to a transformer's primary winding won't produce any output on the secondary — you'll just get a magnetic field that doesn't change, so no induction occurs. Worse, the primary winding of a transformer has very low DC resistance, so connecting DC can draw excessive current and overheat or burn out the coil. Transformers are **AC-only devices**.
+
+## Key Terms
+
+- **Transformer:** A device that changes AC voltage levels using electromagnetic induction between two coils sharing a magnetic core
+
+## Exercise
+
+A transformer has 500 turns on the primary and 50 turns on the secondary. If the input is 240V AC, what is the output voltage? Is this a step-up or step-down transformer?
+
+
+
+<details>
+<summary>Show Answer</summary>
+
+**Turns ratio:** 500:50 = 10:1
+
+**Output voltage:** 240V ÷ 10 = **24V AC**
+
+This is a **step-down transformer** because the secondary has fewer turns than the primary, producing a lower output voltage. This type of transformer is commonly used in doorbell systems and low-voltage control circuits.
+
+
+</details>
+
+## Recap
+
+- Transformers **change voltage levels** — stepping up or stepping down.
+- They work through **electromagnetic induction** between two coils on a shared core.
+- The **turns ratio** determines the voltage ratio: more secondary turns = higher output voltage.
+- Transformers **only work with AC** — DC creates a static field with no induction.
+- They're essential to the **power grid**, phone chargers, doorbells, and countless other applications.

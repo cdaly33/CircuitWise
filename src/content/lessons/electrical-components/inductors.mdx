@@ -1,0 +1,93 @@
+---
+title: "Inductors"
+stage: 5
+stageSlug: "electrical-components"
+lessonNumber: 3
+description: "Learn how inductors store energy in a magnetic field."
+keyTerms: ["inductor"]
+difficulty: "intermediate"
+estimatedMinutes: 7
+draft: false
+---
+
+## Why This Matters
+
+Inductors might be the least talked-about of the three passive components (resistors, capacitors, and inductors), but they're critical to the electrical world. Every transformer, motor, and power supply relies on the principles of inductance. Understanding inductors completes your picture of how the fundamental components work.
+
+## What Inductors Do
+
+An **inductor** stores energy in a **magnetic field** when current flows through it. While a capacitor stores energy in an electric field (between plates), an inductor stores it in a magnetic field (around a coil of wire).
+
+The key behavior of an inductor is that it **opposes changes in current**. If you try to suddenly increase current through an inductor, it pushes back. If you try to suddenly decrease current, it tries to keep it flowing. It's like a heavy flywheel — hard to speed up, hard to slow down.
+
+## How They Work
+
+An inductor is simply a **coil of wire**, often wrapped around a core (like iron) to strengthen the magnetic field.
+
+When current flows through the coil:
+1. A magnetic field builds up around the wire
+2. Energy is stored in that magnetic field
+3. If the current tries to change, the magnetic field resists the change by inducing a voltage that opposes it
+
+This property is called **inductance**, measured in **henrys (H)**. Most practical inductors are measured in:
+
+- **Millihenrys (mH)** — thousandths of a henry
+- **Microhenrys (μH)** — millionths of a henry
+
+## Inductors Oppose Changes in Current
+
+This is the single most important thing to remember about inductors:
+
+- **DC (steady current):** An inductor acts like a plain wire — almost no resistance once the current is established
+- **AC (changing current):** An inductor opposes the changes, effectively resisting AC signals. Higher frequency = more opposition
+
+This frequency-dependent behavior is the opposite of a capacitor (which blocks DC and passes AC). Together, inductors and capacitors form the basis of all **filters** — circuits that select specific frequencies.
+
+## Where Inductors Are Used
+
+- **Transformers:** Two inductors (coils) sharing a magnetic core — the backbone of the power grid
+- **Filters:** Block high-frequency noise in power supplies and audio equipment
+- **Motors and generators:** The coils inside every motor are inductors creating rotating magnetic fields
+- **Chokes:** Inductors used specifically to block AC while passing DC (common in power supplies)
+- **Radio tuning:** Inductors combined with capacitors select specific radio frequencies
+- **Switching power supplies:** Inductors store and release energy in sync with rapid switching to convert voltage levels efficiently
+
+## Real World Example
+
+The charging pad for a wireless phone charger uses inductors on both sides. The pad contains a coil (inductor) that creates an alternating magnetic field. Your phone has a matching coil that picks up that field and converts it back into current to charge the battery. This is **electromagnetic induction** at work — the same principle that makes transformers and generators possible.
+
+## Common Beginner Mistake
+
+Forgetting that inductors can produce **voltage spikes** when current is suddenly interrupted. Because an inductor opposes changes in current, if you abruptly cut the current (like opening a switch), the collapsing magnetic field generates a brief, high-voltage spike. This spike can damage switches, transistors, and other components. That's why circuits with inductors often include a **flyback diode** to safely absorb these spikes.
+
+## Key Terms
+
+- **Inductor:** A coil of wire that stores energy in a magnetic field and opposes changes in current, measured in henrys (H)
+
+## Exercise
+
+An inductor and a capacitor behave oppositely with AC and DC. Fill in the blanks:
+
+- An inductor easily passes ______ and opposes ______.
+- A capacitor easily passes ______ and blocks ______.
+
+
+
+<details>
+<summary>Show Answer</summary>
+
+- An inductor easily passes **DC** and opposes **AC**.
+- A capacitor easily passes **AC** and blocks **DC**.
+
+This complementary behavior is why inductors and capacitors are paired together in filter circuits. An inductor lets steady current through while blocking high-frequency noise, and a capacitor does the reverse.
+
+
+</details>
+
+## Recap
+
+- Inductors are **coils of wire** that store energy in a **magnetic field**.
+- Their key property: they **oppose changes in current**.
+- They pass DC easily but resist AC — the opposite of capacitors.
+- Inductors are the foundation of **transformers, motors, filters, and wireless charging**.
+- Watch out for **voltage spikes** when current through an inductor is suddenly interrupted.

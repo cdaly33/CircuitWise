@@ -1,0 +1,105 @@
+---
+title: "Relays and Contactors"
+stage: 5
+stageSlug: "electrical-components"
+lessonNumber: 6
+description: "Learn how relays and contactors use small signals to control large loads."
+keyTerms: ["relay", "contactor"]
+difficulty: "intermediate"
+estimatedMinutes: 7
+draft: false
+---
+
+## Why This Matters
+
+Sometimes you need a low-voltage, low-power signal to control something big — like a thermostat turning on a furnace, or a car's ignition switch starting a 200-amp starter motor. Relays and contactors make this possible. They're electrically operated switches that bridge the gap between small control circuits and large power circuits.
+
+## Electrically Operated Switches
+
+A **relay** is a switch that's operated by an electromagnet instead of your finger. When you send current through a small coil, it creates a magnetic field that pulls a metal contact closed (or open), completing (or breaking) a separate circuit.
+
+The beauty of this design is **electrical isolation** — the control circuit and the power circuit are completely separate. A 5V signal from a microcontroller can switch on a 240V air conditioner without any direct electrical connection between the two.
+
+### How a Relay Works
+
+1. A small current energizes the **coil** (the control side)
+2. The coil creates a **magnetic field**
+3. The magnetic field pulls the **armature** (a movable metal piece)
+4. The armature closes (or opens) the **contacts** (the power side)
+5. When the coil is de-energized, a spring returns the contacts to their default position
+
+### Relay Contact Types
+
+- **Normally Open (NO):** Contacts are open (disconnected) when the relay is off, closed when energized
+- **Normally Closed (NC):** Contacts are closed (connected) when the relay is off, open when energized
+- **SPDT (Single Pole, Double Throw):** Has both NO and NC contacts — one common terminal switches between two outputs
+
+## Small Control Circuit, Large Power Circuit
+
+This is the fundamental value of relays:
+
+| Control Side | Power Side |
+|-------------|-----------|
+| Low voltage (5V, 12V, 24V) | High voltage (120V, 240V, 480V) |
+| Low current (milliamps) | High current (amps to tens of amps) |
+| Fragile electronics | Heavy loads like motors and heaters |
+
+Your thermostat runs on 24V and draws almost no current. But your furnace runs on 120V or 240V and draws significant current. A relay inside the furnace receives the 24V signal and switches on the high-power heating elements.
+
+## Relay vs Contactor
+
+A **contactor** is essentially a heavy-duty relay designed for higher power levels:
+
+| Feature | Relay | Contactor |
+|---------|-------|-----------|
+| Current rating | Up to ~10–20A | 20A to thousands of amps |
+| Size | Small (can fit in your palm) | Large (mounted in electrical panels) |
+| Typical use | Electronics, automotive, light loads | Motors, HVAC, industrial machinery |
+| Arc suppression | Basic or none | Built-in arc chutes for safety |
+| Overload protection | Usually none | Often paired with overload relays |
+
+In short: relays are for lighter jobs, contactors are for heavy industrial work. The operating principle is the same.
+
+## Where They're Used
+
+- **HVAC systems:** Thermostats use relays to control compressors and blowers
+- **Motor starters:** Contactors switch large motors on and off in factories
+- **Automotive:** Relays control headlights, fuel pumps, and starter motors
+- **Home automation:** Smart home devices use relays to control lights and appliances
+- **Industrial controls:** PLCs (Programmable Logic Controllers) use relays and contactors to operate machinery
+- **Safety systems:** Emergency stop circuits use contactors to cut power instantly
+
+## Real World Example
+
+When you turn the key in your car, the ignition switch carries only a small current. But the starter motor needs **hundreds of amps** to crank the engine. A relay (called the **starter solenoid**) bridges this gap. Your key switch sends a small signal to the relay, which closes heavy-duty contacts that connect the battery directly to the starter motor. Without this relay, you'd need impossibly thick wires running all the way to your dashboard.
+
+## Common Beginner Mistake
+
+Forgetting the **flyback diode** across the relay coil. A relay coil is an inductor — when you cut power to it, the collapsing magnetic field generates a voltage spike that can damage transistors, microcontrollers, or other electronics driving the relay. Always place a diode (reversed, cathode to positive) across the coil to absorb this spike. Most relay modules for hobby electronics include this protection built in.
+
+## Key Terms
+
+- **Relay:** An electrically operated switch where a small coil controls separate, larger contacts
+- **Contactor:** A heavy-duty relay designed for switching large electrical loads in industrial applications
+
+## Exercise
+
+A thermostat outputs 24V DC to signal the furnace to turn on. The furnace blower motor runs on 120V AC and draws 8 amps. Why can't the thermostat switch the motor directly?
+
+
+
+<details>
+<summary>Show Answer</summary>
+
+The thermostat circuit operates at **24V DC** with very low current capability. The blower motor needs **120V AC at 8 amps** — a completely different voltage, current level, and type of power. Connecting them directly would be dangerous and wouldn't work. Instead, a **relay** inside the furnace receives the 24V signal on its coil side and switches the 120V/8A motor power on its contact side. The two circuits remain electrically isolated, which is safe and practical.
+
+
+</details>
+
+## Recap
+
+- Relays are **electrically operated switches** — a small coil controls larger contacts.
+- They provide **electrical isolation** between low-power control circuits and high-power loads.
+- **Contactors** are heavy-duty relays for industrial applications with higher current ratings.
+- Always use a **flyback diode** across relay coils to protect driving electronics.
+- Relays are found in HVAC, automotive, home automation, and industrial control systems.

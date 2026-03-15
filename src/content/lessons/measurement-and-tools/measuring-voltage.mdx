@@ -1,0 +1,116 @@
+---
+title: "Measuring Voltage"
+stage: 4
+stageSlug: "measurement-and-tools"
+lessonNumber: 3
+description: "Learn the correct technique for measuring voltage with a multimeter."
+keyTerms: ["voltage", "multimeter"]
+difficulty: "intermediate"
+estimatedMinutes: 7
+draft: false
+---
+
+## Why This Matters
+
+Voltage is the measurement you'll take most often as an electrician. Is the outlet live? Is the battery charged? Is the power supply delivering the right voltage? These are everyday questions, and measuring voltage correctly — and safely — is how you answer them.
+
+## How Voltage Measurement Works
+
+Voltage is always measured **in parallel** — meaning you connect the meter **across** the component or source you want to measure, not in line with it. You don't need to break the circuit open.
+
+Think of it like checking water pressure at a faucet. You attach a gauge to the faucet and read the pressure without interrupting the flow. Similarly, a voltmeter "taps into" two points in a circuit to read the pressure difference between them.
+
+This is one reason voltage is the easiest and safest electrical measurement — you just touch two points and read.
+
+## Setting Up Your Multimeter
+
+1. **Plug the black probe into the COM jack**
+2. **Plug the red probe into the VΩmA jack**
+3. **Turn the dial to the correct voltage mode**
+
+### AC Voltage vs DC Voltage Modes
+
+Your multimeter has two voltage settings:
+
+| Mode | Symbol | Use For |
+|------|--------|---------|
+| DC Voltage | **V⎓** (V with a straight line) | Batteries, electronics, solar panels, car electrical |
+| AC Voltage | **V~** (V with a wavy line) | Wall outlets, appliances, building wiring |
+
+Picking the wrong mode won't damage anything, but you'll get a wrong or zero reading. If you're not sure, try **DC first** — if the reading is zero or unstable, switch to AC.
+
+### Manual vs Auto-Ranging
+
+- **Auto-ranging meters** figure out the correct scale automatically. Just select AC or DC voltage and measure.
+- **Manual-ranging meters** require you to choose a range. Always start with a range **higher** than what you expect to measure. Measuring a 120V outlet? Start on the 200V range, not the 20V range.
+
+## Taking a Voltage Measurement
+
+### Step-by-Step
+
+1. Set the dial to the correct voltage mode (AC or DC)
+2. Touch the **black probe** to the negative or neutral reference point
+3. Touch the **red probe** to the positive or hot point you want to measure
+4. Read the display
+
+### Reading the Result
+
+- A **positive number** means the red probe is at a higher potential than the black probe
+- A **negative number** just means you have the probes reversed — no harm done, just swap them
+- A reading of **OL** (overload) means the voltage exceeds your selected range — move to a higher range
+
+## Common Voltage Measurements
+
+Here's what you'll typically see:
+
+| Source | Expected Reading | Mode |
+|--------|-----------------|------|
+| AA battery | ~1.5V | DC |
+| 9V battery | ~9V | DC |
+| Car battery | ~12.6V (fully charged) | DC |
+| US wall outlet | ~120V | AC |
+| Dryer outlet (US) | ~240V | AC |
+| USB port | ~5V | DC |
+
+Readings won't be exactly these values — that's normal. A "120V" outlet might read anywhere from 115V to 125V.
+
+## Real World Example
+
+You're troubleshooting a light fixture that won't turn on. With the switch turned on, you set your meter to AC voltage and measure across the fixture's terminals. If you read ~120V, the wiring is fine and the bulb or fixture is the problem. If you read 0V, the issue is upstream — maybe a tripped breaker, a bad switch, or a broken wire. Voltage testing lets you isolate the problem quickly without taking anything apart.
+
+## Common Beginner Mistake
+
+Trying to measure AC voltage with the meter set to **DC mode**. On most digital meters, this gives a reading of 0V or a wildly fluctuating number — which might make you think the outlet is dead when it's perfectly fine. Always make sure your mode matches what you're measuring: **AC for wall power, DC for batteries and electronics.**
+
+## Key Terms
+
+- **Voltage:** The electrical pressure (potential difference) between two points, measured in volts
+- **Multimeter:** The instrument used to measure voltage, current, and resistance
+
+## Exercise
+
+You suspect a wall outlet has lost power. Describe the steps to check it with a multimeter.
+
+
+
+<details>
+<summary>Show Answer</summary>
+
+1. Plug the **black probe into COM** and the **red probe into VΩmA**
+2. Turn the dial to **AC voltage** (V~ symbol)
+3. Insert the probes into the outlet slots (one in each slot)
+4. Read the display — it should show approximately **120V** if the outlet is live
+5. If it reads **0V**, the circuit is dead — check the breaker panel
+
+Always keep your fingers behind the probe guards and never touch the metal tips while measuring.
+
+
+</details>
+
+## Recap
+
+- Voltage is measured **in parallel** — across the two points you're testing.
+- Use **DC mode** for batteries and electronics, **AC mode** for building wiring and outlets.
+- Always start on a **higher range** with manual-ranging meters.
+- A negative reading just means the probes are reversed — no damage done.
+- Voltage testing is the most common and safest electrical measurement.

@@ -1,0 +1,108 @@
+---
+title: "Diodes"
+stage: 5
+stageSlug: "electrical-components"
+lessonNumber: 4
+description: "Learn how diodes work as one-way valves for electricity."
+keyTerms: ["diode", "led"]
+difficulty: "intermediate"
+estimatedMinutes: 7
+draft: false
+---
+
+## Why This Matters
+
+Diodes are the gatekeepers of electronics. They allow current to flow in one direction and block it in the other. This simple behavior makes possible everything from converting wall power to DC, to protecting circuits from damage, to lighting up displays with LEDs. Once you understand diodes, you'll see them everywhere.
+
+## The One-Way Valve
+
+A **diode** is like a one-way valve for electricity. Current can flow through it in one direction (forward) but is blocked in the other direction (reverse).
+
+Think of a check valve in a plumbing system. Water flows freely in one direction, but if it tries to flow backward, the valve snaps shut. A diode does the same thing with electric current.
+
+## Anode and Cathode
+
+Every diode has two terminals:
+
+- **Anode (+)** — the positive side, where current enters
+- **Cathode (−)** — the negative side, where current exits
+
+On a physical diode, the **cathode** is usually marked with a **stripe or band** on one end. Current flows from anode to cathode — in the direction the triangle in the schematic symbol points.
+
+## Forward Bias vs Reverse Bias
+
+### Forward Bias
+
+When the anode is at a higher voltage than the cathode, the diode is **forward biased** — current flows through. But there's a small catch: the diode needs a minimum voltage (called the **forward voltage drop**) before it starts conducting:
+
+- **Silicon diodes:** ~0.7V forward drop
+- **LEDs:** 1.8V–3.3V depending on color
+- **Schottky diodes:** ~0.3V forward drop
+
+### Reverse Bias
+
+When the cathode is at a higher voltage than the anode, the diode is **reverse biased** — it blocks current. In this state, only a tiny leakage current flows (negligible in most applications).
+
+If the reverse voltage gets too high (exceeding the diode's **breakdown voltage**), the diode can be permanently damaged — unless it's a special type designed for this (like a Zener diode).
+
+## LEDs — Light Emitting Diodes
+
+An **LED** is a special type of diode that emits light when forward biased. Unlike regular diodes that just pass current, LEDs convert electrical energy into visible light.
+
+Key facts about LEDs:
+
+- They come in many colors — the color depends on the semiconductor material
+- They're **very efficient** — much less heat than incandescent bulbs
+- They're **polarity sensitive** — connect them backward and they won't light up (but they usually won't be damaged)
+- They need a **current-limiting resistor** — without one, too much current will destroy the LED
+- The longer leg is typically the **anode (+)** and the shorter leg is the **cathode (−)**
+
+LEDs have revolutionized lighting, displays, indicators, and communication (fiber optics use infrared LEDs).
+
+## Where Diodes Are Used
+
+- **Rectifiers:** Convert AC to DC by only allowing current to flow in one direction — this is how every DC power supply works
+- **Protection:** Flyback diodes protect circuits from voltage spikes caused by motors and inductors
+- **Reverse polarity protection:** A diode in series prevents damage if a battery is inserted backward
+- **Voltage regulation:** Zener diodes maintain a constant voltage across a circuit
+- **Signal detection:** Diodes extract audio from radio signals (demodulation)
+- **Indicators:** LEDs are used as status lights on virtually every electronic device
+
+## Real World Example
+
+Your phone charger converts 120V AC from the wall into 5V DC for your phone. A critical step in this process is **rectification** — using diodes to convert the alternating current (which flows back and forth) into direct current (which flows one way). A common design uses four diodes arranged in a **bridge rectifier** pattern, flipping the negative half of the AC wave so all the current flows in the same direction.
+
+## Common Beginner Mistake
+
+Installing an LED without a **current-limiting resistor**. An LED connected directly to a voltage source (even a 3V coin cell in some cases) can draw excessive current and burn out instantly. Always pair an LED with a resistor. If an LED lights up for a brief flash and then goes dark forever, it was likely destroyed by too much current.
+
+## Key Terms
+
+- **Diode:** A component that allows current to flow in only one direction — from anode to cathode
+- **LED (Light Emitting Diode):** A diode that produces light when current flows through it in the forward direction
+
+## Exercise
+
+You have a 5V power supply and a red LED that drops 2V and needs 15mA. What resistor value do you need?
+
+
+
+<details>
+<summary>Show Answer</summary>
+
+The resistor must drop the remaining voltage: **5V − 2V = 3V**
+
+Using Ohm's Law: **R = V ÷ I = 3V ÷ 0.015A = 200 Ω**
+
+The nearest standard resistor value is **200 Ω** or **220 Ω**. A 220 Ω resistor would give about 13.6mA — perfectly fine for the LED and slightly under the target, which adds a small safety margin.
+
+
+</details>
+
+## Recap
+
+- Diodes are **one-way valves** for electricity — current flows from **anode to cathode** only.
+- In **forward bias**, current flows (with a small voltage drop). In **reverse bias**, current is blocked.
+- **LEDs** are diodes that emit light — they need a current-limiting resistor.
+- Diodes are essential for **rectification, protection, voltage regulation, and indication**.
+- Always check the polarity markings before installing a diode.
