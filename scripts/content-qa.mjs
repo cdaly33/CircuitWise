@@ -418,7 +418,7 @@ if (existsSync(safetyStageDir)) {
     const body = getBody(readFileSync(f, 'utf-8'));
     const slug = basename(f, '.mdx');
     // Check for safety-related keywords/components
-    const hasSafetyContent = /\b(warning|caution|danger|safety|⚠|🚨|SafetyNote|Warning|Caution)\b/i.test(body);
+    const hasSafetyContent = /(\bwarning\b|\bcaution\b|\bdanger\b|\bsafety note\b|⚠️|⚠|🚨|SafetyNote)/i.test(body);
     if (!hasSafetyContent) {
       warn(`Safety lesson safety-foundations/${slug}: No safety disclaimer/warning found in body`);
     }
@@ -430,7 +430,7 @@ for (const f of lessonFiles) {
   const relPath = relative(lessonDir, f).replace(/\\/g, '/');
   const body = getBody(readFileSync(f, 'utf-8'));
   if (/\b(high voltage|electrocution|shock hazard|arc flash|lethal)\b/i.test(body)) {
-    const hasWarning = /\b(warning|caution|danger|⚠|🚨|SafetyNote|Warning|Caution)\b/i.test(body);
+    const hasWarning = /(\bwarning\b|\bcaution\b|\bdanger\b|\bsafety note\b|⚠️|⚠|🚨|SafetyNote)/i.test(body);
     if (!hasWarning) {
       warn(`Lesson ${relPath}: Mentions dangerous topics but has no safety warning`);
     }
