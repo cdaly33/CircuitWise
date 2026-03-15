@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import StageCard from '../../components/navigation/StageCard.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+
+const stages = (await getCollection('stages')).sort(
+  (a, b) => a.data.stageNumber - b.data.stageNumber
+);
+
+const lessons = await getCollection('lessons');
+
+const lessonCounts = new Map<string, number>();
+for (const lesson of lessons) {
+  const slug = lesson.data.stageSlug;
+  lessonCounts.set(slug, (lessonCounts.get(slug) ?? 0) + 1);
+}
+---
+
+<BaseLayout title="All Stages — Circuit-Wise" description="Browse all learning stages from safety foundations to electrical components.">
+  <Header slot="header" />
+
+  <div class="max-w-6xl mx-auto px-4 py-8">
+    <Breadcrumbs segments={[
+      { label: 'Home', href: '/' },
+      { label: 'Stages', href: '/stages/' },
+    ]} />
+
+    <h1 class="text-4xl font-bold mb-2 mt-6">Learning Stages</h1>
+    <p class="text-[var(--color-text-muted)] mb-8">
+      Work through each stage in order — or skip ahead if you already know the basics.
+    </p>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {stages.map((stage) => (
+        <StageCard
+          stageNumber={stage.data.stageNumber}
+          title={stage.data.title}
+          description={stage.data.description}
+          href={`/stages/${stage.id}/`}
+          lessonCount={lessonCounts.get(stage.id) ?? 0}
+          color={stage.data.color}
+        />
+      ))}
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

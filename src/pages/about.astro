@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import DisclaimerBanner from '../components/content/DisclaimerBanner.astro';
+---
+
+<BaseLayout title="About — Circuit-Wise" description="Learn about Circuit-Wise, its mission, audience, and educational disclaimer.">
+  <Header slot="header" />
+
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <Breadcrumbs segments={[
+      { label: 'Home', href: '/' },
+      { label: 'About', href: '/about/' },
+    ]} />
+
+    <!-- Mission -->
+    <section class="mt-6 mb-10">
+      <h1 class="text-4xl font-bold mb-4">About Circuit-Wise</h1>
+      <p class="text-lg text-[var(--color-text-muted)] mb-4">
+        Circuit-Wise is a free, open educational resource designed to teach electricity
+        fundamentals from the ground up. Our mission is to make electrical concepts
+        accessible, approachable, and safe to learn for everyone.
+      </p>
+      <p class="text-[var(--color-text-muted)]">
+        Whether you're a curious student, a hobbyist getting started with electronics,
+        or someone preparing for formal electrical training, Circuit-Wise provides a
+        structured learning path from safety basics through to understanding components
+        and circuits.
+      </p>
+    </section>
+
+    <!-- Who It's For -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">Who It's For</h2>
+      <ul class="space-y-3">
+        <li class="flex items-start gap-3">
+          <span class="text-xl">🎓</span>
+          <div>
+            <strong>Students</strong> — Learning electricity concepts for school or personal interest
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-xl">🔧</span>
+          <div>
+            <strong>Hobbyists</strong> — Getting started with electronics projects and DIY
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-xl">👷</span>
+          <div>
+            <strong>Pre-apprentices</strong> — Building foundational knowledge before formal electrical training
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-xl">🏠</span>
+          <div>
+            <strong>Homeowners</strong> — Understanding your home's electrical system for safety awareness
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-xl">🧑‍🏫</span>
+          <div>
+            <strong>Educators</strong> — Looking for structured materials to support teaching
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Full Disclaimer -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">Educational Disclaimer</h2>
+      <div class="p-6 rounded-lg border border-[var(--color-safety)] bg-[var(--color-safety)]/5">
+        <p class="mb-4">
+          <strong>Circuit-Wise is an educational resource only.</strong> The content on this site
+          is intended to teach fundamental concepts about electricity and is not a substitute for
+          professional electrical training, certification, or licensing.
+        </p>
+        <p class="mb-4">
+          <strong>Do not attempt electrical work</strong> unless you are a qualified, licensed
+          electrician or are working under the direct supervision of one. Electrical work performed
+          incorrectly can cause serious injury, death, fire, or property damage.
+        </p>
+        <p class="mb-4">
+          All information is provided "as is" for educational purposes. While we strive for
+          accuracy, we make no warranties about the completeness, reliability, or suitability
+          of the information. Always consult local codes, regulations, and qualified professionals
+          before performing any electrical work.
+        </p>
+        <p>
+          Circuit-Wise, its authors, and contributors accept no liability for any damage, injury,
+          or loss resulting from the use or misuse of information on this site.
+        </p>
+      </div>
+    </section>
+
+    <!-- Educational Use -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">Educational Use</h2>
+      <p class="text-[var(--color-text-muted)] mb-4">
+        Circuit-Wise is a non-commercial project. There are no ads, no tracking beyond
+        basic analytics, and no monetization. The content is freely available for educational
+        use.
+      </p>
+      <p class="text-[var(--color-text-muted)]">
+        If you find this resource helpful, the best way to support it is to share it with
+        others who might benefit from learning electrical fundamentals safely.
+      </p>
+    </section>
+
+    <DisclaimerBanner variant="inline" />
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

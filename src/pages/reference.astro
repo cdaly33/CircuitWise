@@ -1,0 +1,247 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import FormulaCard from '../components/content/FormulaCard.astro';
+---
+
+<BaseLayout title="Quick Reference — Circuit-Wise" description="Ohm's Law, power formulas, common units, wire color codes, and residential voltages at a glance.">
+  <Header slot="header" />
+
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <Breadcrumbs segments={[
+      { label: 'Home', href: '/' },
+      { label: 'Reference', href: '/reference/' },
+    ]} />
+
+    <h1 class="text-4xl font-bold mb-2 mt-6">Quick Reference</h1>
+    <p class="text-[var(--color-text-muted)] mb-8">
+      Essential formulas, units, and reference tables for electrical fundamentals.
+    </p>
+
+    <!-- Ohm's Law -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">Ohm's Law</h2>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <FormulaCard
+          formula="V = I × R"
+          variables={[
+            { symbol: 'V', name: 'Voltage', unit: 'Volts (V)', color: 'voltage' },
+            { symbol: 'I', name: 'Current', unit: 'Amperes (A)', color: 'current' },
+            { symbol: 'R', name: 'Resistance', unit: 'Ohms (Ω)', color: 'resistance' },
+          ]}
+          example="If I = 2A and R = 5Ω, then V = 2 × 5 = 10V"
+        />
+        <FormulaCard
+          formula="I = V ÷ R"
+          variables={[
+            { symbol: 'I', name: 'Current', unit: 'Amperes (A)', color: 'current' },
+            { symbol: 'V', name: 'Voltage', unit: 'Volts (V)', color: 'voltage' },
+            { symbol: 'R', name: 'Resistance', unit: 'Ohms (Ω)', color: 'resistance' },
+          ]}
+          example="If V = 12V and R = 4Ω, then I = 12 ÷ 4 = 3A"
+        />
+        <FormulaCard
+          formula="R = V ÷ I"
+          variables={[
+            { symbol: 'R', name: 'Resistance', unit: 'Ohms (Ω)', color: 'resistance' },
+            { symbol: 'V', name: 'Voltage', unit: 'Volts (V)', color: 'voltage' },
+            { symbol: 'I', name: 'Current', unit: 'Amperes (A)', color: 'current' },
+          ]}
+          example="If V = 24V and I = 6A, then R = 24 ÷ 6 = 4Ω"
+        />
+      </div>
+    </section>
+
+    <!-- Power Formulas -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">Power Formulas</h2>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <FormulaCard
+          formula="P = V × I"
+          variables={[
+            { symbol: 'P', name: 'Power', unit: 'Watts (W)', color: 'power' },
+            { symbol: 'V', name: 'Voltage', unit: 'Volts (V)', color: 'voltage' },
+            { symbol: 'I', name: 'Current', unit: 'Amperes (A)', color: 'current' },
+          ]}
+          example="If V = 120V and I = 2A, then P = 120 × 2 = 240W"
+        />
+        <FormulaCard
+          formula="P = I² × R"
+          variables={[
+            { symbol: 'P', name: 'Power', unit: 'Watts (W)', color: 'power' },
+            { symbol: 'I', name: 'Current', unit: 'Amperes (A)', color: 'current' },
+            { symbol: 'R', name: 'Resistance', unit: 'Ohms (Ω)', color: 'resistance' },
+          ]}
+          example="If I = 3A and R = 10Ω, then P = 9 × 10 = 90W"
+        />
+        <FormulaCard
+          formula="P = V² ÷ R"
+          variables={[
+            { symbol: 'P', name: 'Power', unit: 'Watts (W)', color: 'power' },
+            { symbol: 'V', name: 'Voltage', unit: 'Volts (V)', color: 'voltage' },
+            { symbol: 'R', name: 'Resistance', unit: 'Ohms (Ω)', color: 'resistance' },
+          ]}
+          example="If V = 120V and R = 60Ω, then P = 14400 ÷ 60 = 240W"
+        />
+      </div>
+    </section>
+
+    <!-- Common Units -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">Common Electrical Units</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse text-left">
+          <thead>
+            <tr class="border-b border-[var(--color-border)]">
+              <th class="py-2 pr-4 font-semibold">Symbol</th>
+              <th class="py-2 pr-4 font-semibold">Unit</th>
+              <th class="py-2 font-semibold">Measures</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4 font-mono">V</td>
+              <td class="py-2 pr-4">Volt</td>
+              <td class="py-2">Voltage (electrical pressure)</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4 font-mono">A</td>
+              <td class="py-2 pr-4">Ampere</td>
+              <td class="py-2">Current (flow of charge)</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4 font-mono">Ω</td>
+              <td class="py-2 pr-4">Ohm</td>
+              <td class="py-2">Resistance (opposition to flow)</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4 font-mono">W</td>
+              <td class="py-2 pr-4">Watt</td>
+              <td class="py-2">Power (rate of energy transfer)</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4 font-mono">Hz</td>
+              <td class="py-2 pr-4">Hertz</td>
+              <td class="py-2">Frequency (cycles per second)</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4 font-mono">F</td>
+              <td class="py-2 pr-4">Farad</td>
+              <td class="py-2">Capacitance (charge storage)</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4 font-mono">H</td>
+              <td class="py-2 pr-4">Henry</td>
+              <td class="py-2">Inductance (magnetic storage)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Wire Color Codes -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">Wire Color Codes (US NEC)</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse text-left">
+          <thead>
+            <tr class="border-b border-[var(--color-border)]">
+              <th class="py-2 pr-4 font-semibold">Color</th>
+              <th class="py-2 pr-4 font-semibold">Function</th>
+              <th class="py-2 font-semibold">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4">
+                <span class="inline-flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-black border border-gray-300"></span> Black
+                </span>
+              </td>
+              <td class="py-2 pr-4">Hot (Line)</td>
+              <td class="py-2">Primary hot conductor</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4">
+                <span class="inline-flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-white border border-gray-300"></span> White
+                </span>
+              </td>
+              <td class="py-2 pr-4">Neutral</td>
+              <td class="py-2">Return path for current</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4">
+                <span class="inline-flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-green-600"></span> Green
+                </span>
+              </td>
+              <td class="py-2 pr-4">Ground</td>
+              <td class="py-2">Equipment grounding conductor</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4">
+                <span class="inline-flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-red-600"></span> Red
+                </span>
+              </td>
+              <td class="py-2 pr-4">Hot (second phase)</td>
+              <td class="py-2">Second hot in 240V circuits</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4">
+                <span class="inline-flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full bg-blue-600"></span> Blue
+                </span>
+              </td>
+              <td class="py-2 pr-4">Hot (3-phase)</td>
+              <td class="py-2">Used in 3-phase systems</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Common Residential Voltages -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">Common Residential Voltages</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="p-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
+          <h3 class="font-semibold mb-2">🇺🇸 United States</h3>
+          <ul class="text-sm space-y-1 text-[var(--color-text-muted)]">
+            <li><strong>120V</strong> — Standard outlets (lighting, small appliances)</li>
+            <li><strong>240V</strong> — Large appliances (dryer, oven, A/C)</li>
+            <li><strong>60 Hz</strong> — AC frequency</li>
+          </ul>
+        </div>
+        <div class="p-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
+          <h3 class="font-semibold mb-2">🇬🇧 United Kingdom / 🇦🇺 Australia</h3>
+          <ul class="text-sm space-y-1 text-[var(--color-text-muted)]">
+            <li><strong>230–240V</strong> — Standard outlets</li>
+            <li><strong>50 Hz</strong> — AC frequency</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Links -->
+    <section class="mb-8 flex flex-wrap gap-4">
+      <a
+        href="/glossary/"
+        class="px-4 py-2 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors"
+      >
+        📖 Full Glossary
+      </a>
+      <a
+        href="/symbols/"
+        class="px-4 py-2 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors"
+      >
+        🔣 Symbol Library
+      </a>
+    </section>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

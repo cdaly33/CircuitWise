@@ -1,0 +1,94 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('glossary');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// Build related terms links
+const allGlossary = await getCollection('glossary');
+const relatedTermEntries = (entry.data.relatedTerms ?? [])
+  .map((slug: string) => allGlossary.find((g) => g.id === slug))
+  .filter(Boolean);
+
+// Build related lessons links
+const allLessons = await getCollection('lessons');
+const relatedLessonEntries = (entry.data.relatedLessons ?? [])
+  .map((id: string) => allLessons.find((l) => l.id === id))
+  .filter(Boolean);
+---
+
+<BaseLayout
+  title={`${entry.data.term} — Glossary — Circuit-Wise`}
+  description={`Definition of ${entry.data.term} in electrical fundamentals.`}
+>
+  <Header slot="header" />
+
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <Breadcrumbs segments={[
+      { label: 'Home', href: '/' },
+      { label: 'Glossary', href: '/glossary/' },
+      { label: entry.data.term, href: `/glossary/${entry.id}/` },
+    ]} />
+
+    <article class="mt-6">
+      <div class="flex items-center gap-3 mb-4">
+        <h1 class="text-4xl font-bold">{entry.data.term}</h1>
+        <span class="text-sm px-3 py-1 rounded-full bg-[var(--color-surface-alt)] text-[var(--color-text-muted)]">
+          {entry.data.category}
+        </span>
+      </div>
+
+      <div class="prose dark:prose-invert max-w-none mb-8">
+        <Content />
+      </div>
+
+      {relatedTermEntries.length > 0 && (
+        <section class="mb-8">
+          <h2 class="text-xl font-bold mb-3">Related Terms</h2>
+          <div class="flex flex-wrap gap-2">
+            {relatedTermEntries.map((related: any) => (
+              <a
+                href={`/glossary/${related.id}/`}
+                class="px-3 py-1 rounded-full border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors text-sm"
+              >
+                {related.data.term}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {relatedLessonEntries.length > 0 && (
+        <section class="mb-8">
+          <h2 class="text-xl font-bold mb-3">Related Lessons</h2>
+          <ul class="space-y-2">
+            {relatedLessonEntries.map((lesson: any) => (
+              <li>
+                <a
+                  href={`/stages/${lesson.id}/`}
+                  class="text-[var(--color-voltage)] hover:underline"
+                >
+                  {lesson.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </article>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

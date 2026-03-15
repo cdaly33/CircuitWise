@@ -1,0 +1,155 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+
+const allEntries = (await getCollection('glossary')).sort((a, b) =>
+  a.data.term.localeCompare(b.data.term)
+);
+
+// Group by first letter
+const grouped = new Map<string, typeof allEntries>();
+for (const entry of allEntries) {
+  const letter = entry.data.term[0].toUpperCase();
+  if (!grouped.has(letter)) grouped.set(letter, []);
+  grouped.get(letter)!.push(entry);
+}
+
+// Get unique categories
+const categories = [...new Set(allEntries.map((e) => e.data.category))].sort();
+---
+
+<BaseLayout title="Glossary — Circuit-Wise" description="Browse the complete glossary of electrical terms and definitions.">
+  <Header slot="header" />
+
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <Breadcrumbs segments={[
+      { label: 'Home', href: '/' },
+      { label: 'Glossary', href: '/glossary/' },
+    ]} />
+
+    <h1 class="text-4xl font-bold mb-2 mt-6">Glossary</h1>
+    <p class="text-[var(--color-text-muted)] mb-6">
+      Key electrical terms and definitions. Use search or browse by letter.
+    </p>
+
+    <!-- Search -->
+    <div class="mb-6">
+      <label for="glossary-search" class="sr-only">Search glossary</label>
+      <input
+        id="glossary-search"
+        type="search"
+        placeholder="Search terms…"
+        class="w-full px-4 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)]"
+      />
+    </div>
+
+    <!-- Category filters -->
+    <div class="flex flex-wrap gap-2 mb-8" id="category-filters">
+      <button
+        data-category="all"
+        class="px-3 py-1 text-sm rounded-full border border-[var(--color-border)] bg-[var(--color-voltage)] text-white"
+      >
+        All
+      </button>
+      {categories.map((cat) => (
+        <button
+          data-category={cat}
+          class="px-3 py-1 text-sm rounded-full border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors"
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    <!-- Letter index -->
+    <nav class="flex flex-wrap gap-2 mb-8" aria-label="Alphabetical index">
+      {[...grouped.keys()].map((letter) => (
+        <a
+          href={`#letter-${letter}`}
+          class="w-8 h-8 flex items-center justify-center rounded border border-[var(--color-border)] text-sm font-mono hover:bg-[var(--color-surface-hover)] transition-colors"
+        >
+          {letter}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Terms list -->
+    <div id="glossary-list">
+      {[...grouped.entries()].map(([letter, entries]) => (
+        <section id={`letter-${letter}`} class="mb-8">
+          <h2 class="text-2xl font-bold mb-3 border-b border-[var(--color-border)] pb-1">{letter}</h2>
+          <ul class="space-y-3">
+            {entries.map((entry) => (
+              <li
+                class="glossary-item"
+                data-term={entry.data.term.toLowerCase()}
+                data-category={entry.data.category}
+              >
+                <a
+                  href={`/glossary/${entry.id}/`}
+                  class="block p-3 rounded-lg border border-[var(--color-border)] hover:shadow-md transition-shadow bg-[var(--color-surface)]"
+                >
+                  <div class="flex items-center gap-2 mb-1">
+                    <h3 class="font-semibold">{entry.data.term}</h3>
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--color-surface-alt)] text-[var(--color-text-muted)]">
+                      {entry.data.category}
+                    </span>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<script>
+  const searchInput = document.getElementById('glossary-search') as HTMLInputElement | null;
+  const items = document.querySelectorAll<HTMLElement>('.glossary-item');
+  const sections = document.querySelectorAll<HTMLElement>('#glossary-list > section');
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('#category-filters button');
+
+  let activeCategory = 'all';
+
+  function applyFilters() {
+    const query = (searchInput?.value ?? '').toLowerCase().trim();
+
+    sections.forEach((section) => {
+      let visibleCount = 0;
+      const sectionItems = section.querySelectorAll<HTMLElement>('.glossary-item');
+
+      sectionItems.forEach((item) => {
+        const term = item.dataset.term ?? '';
+        const category = item.dataset.category ?? '';
+        const matchesSearch = !query || term.includes(query);
+        const matchesCategory = activeCategory === 'all' || category === activeCategory;
+        const visible = matchesSearch && matchesCategory;
+        item.style.display = visible ? '' : 'none';
+        if (visible) visibleCount++;
+      });
+
+      section.style.display = visibleCount > 0 ? '' : 'none';
+    });
+  }
+
+  searchInput?.addEventListener('input', applyFilters);
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activeCategory = btn.dataset.category ?? 'all';
+      // Update button styles
+      filterBtns.forEach((b) => {
+        b.classList.remove('bg-[var(--color-voltage)]', 'text-white');
+      });
+      btn.classList.add('bg-[var(--color-voltage)]', 'text-white');
+      applyFilters();
+    });
+  });
+</script>

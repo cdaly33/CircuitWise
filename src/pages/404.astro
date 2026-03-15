@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+---
+
+<BaseLayout title="Page Not Found — Circuit-Wise" description="The page you're looking for doesn't exist.">
+  <Header slot="header" />
+
+  <div class="max-w-2xl mx-auto px-4 py-16 text-center">
+    <div class="text-6xl mb-6">⚡🔌💥</div>
+    <h1 class="text-4xl font-bold mb-4">Looks like this circuit is open!</h1>
+    <p class="text-lg text-[var(--color-text-muted)] mb-8">
+      The page you're looking for doesn't exist or has been moved.
+      Let's get you back on a closed circuit.
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a
+        href="/"
+        class="px-6 py-3 rounded-lg font-semibold text-white bg-[var(--color-voltage)] hover:opacity-90 transition-opacity"
+      >
+        ← Back to Home
+      </a>
+      <a
+        href="/stages/"
+        class="px-6 py-3 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors"
+      >
+        Browse Stages
+      </a>
+      <a
+        href="/glossary/"
+        class="px-6 py-3 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors"
+      >
+        Glossary
+      </a>
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

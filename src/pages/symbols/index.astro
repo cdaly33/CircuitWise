@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+import SymbolCard from '../../components/library/SymbolCard.astro';
+
+const allSymbols = await getCollection('symbols');
+
+// Group by category
+const grouped = new Map<string, typeof allSymbols>();
+for (const symbol of allSymbols) {
+  const cat = symbol.data.category;
+  if (!grouped.has(cat)) grouped.set(cat, []);
+  grouped.get(cat)!.push(symbol);
+}
+
+function formatCategory(slug: string): string {
+  return slug
+    .split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+---
+
+<BaseLayout title="Symbol Library — Circuit-Wise" description="Browse electrical schematic symbols organized by category.">
+  <Header slot="header" />
+
+  <div class="max-w-6xl mx-auto px-4 py-8">
+    <Breadcrumbs segments={[
+      { label: 'Home', href: '/' },
+      { label: 'Symbols', href: '/symbols/' },
+    ]} />
+
+    <h1 class="text-4xl font-bold mb-2 mt-6">Symbol Library</h1>
+    <p class="text-[var(--color-text-muted)] mb-8">
+      Common electrical and electronic schematic symbols, organized by category.
+    </p>
+
+    {[...grouped.entries()].map(([category, symbols]) => (
+      <section class="mb-10">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-2xl font-bold">{formatCategory(category)}</h2>
+          <a
+            href={`/symbols/${category}/`}
+            class="text-sm text-[var(--color-voltage)] hover:underline"
+          >
+            View all →
+          </a>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {symbols.map((s) => (
+            <SymbolCard
+              name={s.data.name}
+              svgSrc={s.data.svgFile}
+              alt={s.data.altText}
+              href={`/symbols/${s.data.category}/`}
+            />
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

@@ -2,14 +2,80 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import StageCard from '../components/navigation/StageCard.astro';
+import DisclaimerBanner from '../components/content/DisclaimerBanner.astro';
+
+const stages = [
+  { stageNumber: 0, title: 'Safety Foundations', description: 'Learn the essential safety principles before working with or around electricity.', href: '/stages/safety-foundations/', lessonCount: 4, color: 'safety' },
+  { stageNumber: 1, title: 'Foundations of Electricity', description: 'Understand the core concepts: voltage, current, resistance, and how they relate.', href: '/stages/foundations-of-electricity/', lessonCount: 8, color: 'voltage' },
+  { stageNumber: 2, title: 'AC vs DC', description: 'Explore the differences between alternating current and direct current.', href: '/stages/ac-vs-dc/', lessonCount: 5, color: 'current' },
+  { stageNumber: 3, title: 'Circuits', description: 'Learn how components connect to form series, parallel, and combination circuits.', href: '/stages/circuits/', lessonCount: 6, color: 'resistance' },
+  { stageNumber: 4, title: 'Measurement and Tools', description: 'Master the instruments and techniques used to measure electrical quantities.', href: '/stages/measurement-and-tools/', lessonCount: 5, color: 'power' },
+  { stageNumber: 5, title: 'Electrical Components', description: 'Discover the building blocks of circuits: resistors, capacitors, inductors, and more.', href: '/stages/electrical-components/', lessonCount: 8, color: 'ground' },
+];
+
+const steps = [
+  { emoji: '📖', title: 'Learn Progressively', description: 'Start with safety basics and build up through six carefully ordered stages.' },
+  { emoji: '✏️', title: 'Practice with Exercises', description: 'Reinforce each concept with interactive quizzes and fill-in-the-blank exercises.' },
+  { emoji: '🧠', title: 'Build Understanding', description: 'Connect the dots between concepts with glossary links, diagrams, and reference sheets.' },
+];
 ---
 
-<BaseLayout title="Circuit-Wise">
+<BaseLayout title="Circuit-Wise — Learn Electricity Fundamentals" description="Free, progressive lessons on electricity fundamentals — from safety basics to electrical components.">
   <Header slot="header" />
-  <div class="max-w-4xl mx-auto px-4 py-16 text-center">
-    <h1 class="text-4xl font-bold mb-4">⚡ Circuit-Wise</h1>
-    <p class="text-xl text-[var(--color-text-muted)] mb-8">Learn electricity fundamentals from the ground up.</p>
-    <p class="text-[var(--color-text-muted)]">Progressive lessons from safety basics to electrical components. Free and open.</p>
+
+  <!-- Hero -->
+  <section class="max-w-4xl mx-auto px-4 pt-16 pb-12 text-center">
+    <h1 class="text-5xl font-bold mb-4">⚡ Circuit-Wise</h1>
+    <p class="text-xl text-[var(--color-text-muted)] mb-8 max-w-2xl mx-auto">
+      Learn electricity fundamentals from the ground up.
+    </p>
+    <a
+      href="/stages/safety-foundations/"
+      class="inline-block px-8 py-3 rounded-lg font-semibold text-white bg-[var(--color-voltage)] hover:opacity-90 transition-opacity"
+    >
+      Start Learning →
+    </a>
+  </section>
+
+  <!-- What You'll Learn -->
+  <section class="max-w-6xl mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold text-center mb-8">What You'll Learn</h2>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {stages.map((s) => (
+        <StageCard
+          stageNumber={s.stageNumber}
+          title={s.title}
+          description={s.description}
+          href={s.href}
+          lessonCount={s.lessonCount}
+          color={s.color}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="max-w-4xl mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold text-center mb-8">How It Works</h2>
+    <div class="grid gap-8 sm:grid-cols-3">
+      {steps.map((step, i) => (
+        <div class="text-center">
+          <div class="text-4xl mb-3">{step.emoji}</div>
+          <h3 class="text-lg font-semibold mb-2">
+            <span class="text-[var(--color-text-muted)] mr-1">{i + 1}.</span>
+            {step.title}
+          </h3>
+          <p class="text-[var(--color-text-muted)] text-sm">{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Disclaimer -->
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <DisclaimerBanner variant="banner" />
   </div>
+
   <Footer slot="footer" />
 </BaseLayout>

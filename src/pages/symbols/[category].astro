@@ -1,0 +1,106 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+
+export async function getStaticPaths() {
+  const allSymbols = await getCollection('symbols');
+  const categories = [...new Set(allSymbols.map((s) => s.data.category))];
+
+  return categories.map((category) => ({
+    params: { category },
+    props: {
+      category,
+      symbols: allSymbols.filter((s) => s.data.category === category),
+    },
+  }));
+}
+
+const { category, symbols } = Astro.props;
+
+function formatCategory(slug: string): string {
+  return slug
+    .split('-')
+    .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
+const allGlossary = await getCollection('glossary');
+const allLessons = await getCollection('lessons');
+---
+
+<BaseLayout
+  title={`${formatCategory(category)} — Symbol Library — Circuit-Wise`}
+  description={`Electrical schematic symbols in the ${formatCategory(category)} category.`}
+>
+  <Header slot="header" />
+
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <Breadcrumbs segments={[
+      { label: 'Home', href: '/' },
+      { label: 'Symbols', href: '/symbols/' },
+      { label: formatCategory(category), href: `/symbols/${category}/` },
+    ]} />
+
+    <h1 class="text-4xl font-bold mb-2 mt-6">{formatCategory(category)}</h1>
+    <p class="text-[var(--color-text-muted)] mb-8">
+      Schematic symbols in the {formatCategory(category).toLowerCase()} category.
+    </p>
+
+    <div class="space-y-8">
+      {symbols.map(async (symbol: any) => {
+        const { Content } = await render(symbol);
+        const relatedTerms = (symbol.data.relatedTerms ?? [])
+          .map((slug: string) => allGlossary.find((g) => g.id === slug))
+          .filter(Boolean);
+        const relatedLessons = (symbol.data.relatedLessons ?? [])
+          .map((id: string) => allLessons.find((l) => l.id === id))
+          .filter(Boolean);
+
+        return (
+          <article class="p-6 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
+            <div class="flex flex-col sm:flex-row gap-6">
+              <div class="flex-shrink-0 w-32 h-32 flex items-center justify-center bg-white dark:bg-gray-100 rounded-lg p-4">
+                <img src={symbol.data.svgFile} alt={symbol.data.altText} class="max-w-full max-h-full" />
+              </div>
+              <div class="flex-1">
+                <h2 class="text-2xl font-bold mb-2">{symbol.data.name}</h2>
+                <div class="prose dark:prose-invert prose-sm mb-4">
+                  <Content />
+                </div>
+
+                {relatedTerms.length > 0 && (
+                  <div class="mb-2">
+                    <span class="text-sm font-semibold">Related terms: </span>
+                    {relatedTerms.map((t: any, i: number) => (
+                      <>
+                        <a href={`/glossary/${t.id}/`} class="text-sm text-[var(--color-voltage)] hover:underline">{t.data.term}</a>
+                        {i < relatedTerms.length - 1 && ', '}
+                      </>
+                    ))}
+                  </div>
+                )}
+
+                {relatedLessons.length > 0 && (
+                  <div>
+                    <span class="text-sm font-semibold">Related lessons: </span>
+                    {relatedLessons.map((l: any, i: number) => (
+                      <>
+                        <a href={`/stages/${l.id}/`} class="text-sm text-[var(--color-voltage)] hover:underline">{l.data.title}</a>
+                        {i < relatedLessons.length - 1 && ', '}
+                      </>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

@@ -1,0 +1,180 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+import StageProgress from '../../components/navigation/StageProgress.astro';
+import SkipQuiz from '../../components/progress/SkipQuiz.astro';
+import LessonLayout from '../../components/layout/LessonLayout.astro';
+import LessonNav from '../../components/navigation/LessonNav.astro';
+
+export async function getStaticPaths() {
+  const stages = (await getCollection('stages')).sort(
+    (a, b) => a.data.stageNumber - b.data.stageNumber
+  );
+  const allLessons = (await getCollection('lessons')).sort(
+    (a, b) => a.data.stage - b.data.stage || a.data.lessonNumber - b.data.lessonNumber
+  );
+
+  const paths: Array<{ params: { slug: string }; props: Record<string, any> }> = [];
+
+  // Stage landing pages: /stages/[stageSlug]/
+  for (const stage of stages) {
+    const stageLessons = allLessons
+      .filter((l) => l.data.stageSlug === stage.id)
+      .sort((a, b) => a.data.lessonNumber - b.data.lessonNumber);
+
+    paths.push({
+      params: { slug: stage.id },
+      props: {
+        type: 'stage',
+        stage,
+        stageLessons: stageLessons,
+        totalStages: stages.length,
+      },
+    });
+  }
+
+  // Lesson pages: /stages/[stageSlug]/[lessonSlug]/
+  for (const lesson of allLessons) {
+    const stageSlug = lesson.data.stageSlug;
+    const lessonSlug = lesson.id.includes('/') ? lesson.id.split('/').pop()! : lesson.id;
+
+    const idx = allLessons.indexOf(lesson);
+    const prevLesson = idx > 0 ? allLessons[idx - 1] : null;
+    const nextLesson = idx < allLessons.length - 1 ? allLessons[idx + 1] : null;
+
+    const stage = stages.find((s) => s.id === stageSlug);
+
+    paths.push({
+      params: { slug: `${stageSlug}/${lessonSlug}` },
+      props: {
+        type: 'lesson',
+        lesson,
+        stage,
+        prev: prevLesson
+          ? { title: prevLesson.data.title, href: `/stages/${prevLesson.id}/` }
+          : null,
+        next: nextLesson
+          ? { title: nextLesson.data.title, href: `/stages/${nextLesson.id}/` }
+          : null,
+      },
+    });
+  }
+
+  return paths;
+}
+
+const { type } = Astro.props;
+
+// Render the appropriate content in frontmatter
+let StageContent: any = null;
+let LessonContent: any = null;
+
+if (type === 'stage') {
+  const rendered = await render(Astro.props.stage);
+  StageContent = rendered.Content;
+} else {
+  const rendered = await render(Astro.props.lesson);
+  LessonContent = rendered.Content;
+}
+
+const difficultyColors: Record<string, string> = {
+  beginner: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+  intermediate: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+  advanced: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+};
+---
+
+{type === 'stage' && (
+  <BaseLayout
+    title={`Stage ${Astro.props.stage.data.stageNumber}: ${Astro.props.stage.data.title} — Circuit-Wise`}
+    description={Astro.props.stage.data.description}
+  >
+    <Header slot="header" />
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+      <Breadcrumbs segments={[
+        { label: 'Home', href: '/' },
+        { label: 'Stages', href: '/stages/' },
+        { label: Astro.props.stage.data.title, href: `/stages/${Astro.props.stage.id}/` },
+      ]} />
+
+      <div class="mt-6 mb-8">
+        <StageProgress
+          totalStages={Astro.props.totalStages}
+          currentStage={Astro.props.stage.data.stageNumber}
+        />
+      </div>
+
+      <SkipQuiz
+        stageSlug={Astro.props.stage.id}
+        stageNumber={Astro.props.stage.data.stageNumber}
+      />
+
+      <h1 class="text-4xl font-bold mb-2 mt-6">
+        <span class="text-[var(--color-text-muted)]">Stage {Astro.props.stage.data.stageNumber}:</span>{' '}
+        {Astro.props.stage.data.title}
+      </h1>
+
+      <div class="prose dark:prose-invert mb-8">
+        <StageContent />
+      </div>
+
+      <h2 class="text-2xl font-bold mb-4">Lessons</h2>
+
+      {Astro.props.stageLessons.length === 0 ? (
+        <p class="text-[var(--color-text-muted)] italic">Lessons coming soon.</p>
+      ) : (
+        <ol class="space-y-4">
+          {Astro.props.stageLessons.map((lesson: any) => (
+            <li>
+              <a
+                href={`/stages/${lesson.id}/`}
+                class="block p-4 rounded-lg border border-[var(--color-border)] hover:shadow-md transition-shadow bg-[var(--color-surface)]"
+              >
+                <div class="flex items-start justify-between gap-4">
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="text-sm font-mono text-[var(--color-text-muted)]">
+                        {lesson.data.lessonNumber}.
+                      </span>
+                      <h3 class="font-semibold">{lesson.data.title}</h3>
+                    </div>
+                    <p class="text-sm text-[var(--color-text-muted)]">{lesson.data.description}</p>
+                  </div>
+                  <span class={`text-xs px-2 py-0.5 rounded-full whitespace-nowrap ${difficultyColors[lesson.data.difficulty] ?? ''}`}>
+                    {lesson.data.difficulty}
+                  </span>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ol>
+      )}
+    </div>
+
+    <Footer slot="footer" />
+  </BaseLayout>
+)}
+
+{type === 'lesson' && (
+  <LessonLayout
+    title={Astro.props.lesson.data.title}
+    stage={Astro.props.lesson.data.stage}
+    stageSlug={Astro.props.lesson.data.stageSlug}
+    lessonNumber={Astro.props.lesson.data.lessonNumber}
+    description={Astro.props.lesson.data.description}
+    estimatedMinutes={Astro.props.lesson.data.estimatedMinutes}
+    difficulty={Astro.props.lesson.data.difficulty}
+  >
+    <div class="prose dark:prose-invert max-w-none">
+      <LessonContent />
+    </div>
+
+    <div class="mt-12">
+      <LessonNav prev={Astro.props.prev} next={Astro.props.next} />
+    </div>
+  </LessonLayout>
+)}
