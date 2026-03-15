@@ -41,6 +41,23 @@
     transition-duration: 150ms;
     transition-timing-function: ease-in-out;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Consistent visible focus ring for interactive elements */
+  :focus-visible {
+    outline: 2px solid var(--color-current, #3b82f6);
+    outline-offset: 2px;
+  }
 }
 
 /* Prose styles for lesson MDX content */

@@ -20,7 +20,7 @@ const { segments } = Astro.props;
           ) : (
             <a
               href={segment.href}
-              class="hover:text-[var(--color-text)] transition-colors underline-offset-2 hover:underline"
+              class="hover:text-[var(--color-text)] transition-colors underline-offset-2 hover:underline rounded focus-visible:ring-2 focus-visible:ring-[var(--color-current)] focus-visible:ring-offset-2 focus-visible:outline-none"
             >
               {segment.label}
             </a>

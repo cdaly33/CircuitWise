@@ -33,18 +33,18 @@ const stagePrefix = `stage-${stageNumber}/`;
     type="button"
     id={`pt-btn-${lessonId}`}
     class="hidden items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-voltage)] focus:ring-offset-2"
-    aria-live="polite"
   >
     Mark as Complete ✓
   </button>
 
-  <p
-    id={`pt-status-${lessonId}`}
-    class="hidden text-sm font-semibold text-green-600 dark:text-green-400"
-    aria-live="polite"
-  >
-    ✓ Completed
-  </p>
+  <div aria-live="polite">
+    <p
+      id={`pt-status-${lessonId}`}
+      class="hidden text-sm font-semibold text-green-600 dark:text-green-400"
+    >
+      ✓ Completed
+    </p>
+  </div>
 
   <p
     id={`pt-stage-status-${lessonId}`}

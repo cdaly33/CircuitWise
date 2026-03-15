@@ -42,22 +42,24 @@ const categories = [...new Set(allEntries.map((e) => e.data.category))].sort();
         id="glossary-search"
         type="search"
         placeholder="Search terms…"
-        class="w-full px-4 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)]"
+        class="w-full px-4 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-current)] focus:ring-offset-2"
       />
     </div>
 
     <!-- Category filters -->
-    <div class="flex flex-wrap gap-2 mb-8" id="category-filters">
+    <div class="flex flex-wrap gap-2 mb-8" id="category-filters" role="group" aria-label="Filter by category">
       <button
         data-category="all"
-        class="px-3 py-1 text-sm rounded-full border border-[var(--color-border)] bg-[var(--color-voltage)] text-white"
+        class="px-3 py-1 text-sm rounded-full border border-[var(--color-border)] bg-[var(--color-voltage)] text-white focus-visible:ring-2 focus-visible:ring-[var(--color-current)] focus-visible:ring-offset-2 focus-visible:outline-none"
+        aria-pressed="true"
       >
         All
       </button>
       {categories.map((cat) => (
         <button
           data-category={cat}
-          class="px-3 py-1 text-sm rounded-full border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors"
+          class="px-3 py-1 text-sm rounded-full border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-current)] focus-visible:ring-offset-2 focus-visible:outline-none"
+          aria-pressed="false"
         >
           {cat}
         </button>
@@ -69,7 +71,7 @@ const categories = [...new Set(allEntries.map((e) => e.data.category))].sort();
       {[...grouped.keys()].map((letter) => (
         <a
           href={`#letter-${letter}`}
-          class="w-8 h-8 flex items-center justify-center rounded border border-[var(--color-border)] text-sm font-mono hover:bg-[var(--color-surface-hover)] transition-colors"
+          class="w-8 h-8 flex items-center justify-center rounded border border-[var(--color-border)] text-sm font-mono hover:bg-[var(--color-surface-hover)] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-current)] focus-visible:ring-offset-2 focus-visible:outline-none"
         >
           {letter}
         </a>
@@ -155,11 +157,13 @@ const categories = [...new Set(allEntries.map((e) => e.data.category))].sort();
   filterBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       activeCategory = btn.dataset.category ?? 'all';
-      // Update button styles
+      // Update button styles and aria-pressed
       filterBtns.forEach((b) => {
         b.classList.remove('bg-[var(--color-voltage)]', 'text-white');
+        b.setAttribute('aria-pressed', 'false');
       });
       btn.classList.add('bg-[var(--color-voltage)]', 'text-white');
+      btn.setAttribute('aria-pressed', 'true');
       applyFilters();
     });
   });
