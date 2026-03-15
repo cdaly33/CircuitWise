@@ -1,0 +1,48 @@
+stageSlug: "ac-vs-dc"
+questions:
+  - question: "What is the main characteristic of direct current (DC)?"
+    options:
+      - "It reverses direction many times per second"
+      - "It flows in one direction only"
+      - "It cannot be stored in batteries"
+      - "It is only used in power plants"
+    correctIndex: 1
+    explanation: "Direct current flows continuously in one direction. Batteries, solar panels, and most electronic devices use DC."
+
+  - question: "Why do power companies primarily use AC for long-distance transmission?"
+    options:
+      - "AC is safer than DC"
+      - "AC uses less wire than DC"
+      - "Transformers can easily step AC voltage up and down"
+      - "AC was invented more recently than DC"
+    correctIndex: 2
+    explanation: "Transformers can efficiently raise AC to high voltages for transmission (reducing energy loss) and lower it back down for safe use in homes."
+
+  - question: "What does the unit hertz (Hz) measure?"
+    options:
+      - "Voltage level"
+      - "Resistance in a wire"
+      - "Cycles per second (frequency)"
+      - "Current strength"
+    correctIndex: 2
+    explanation: "Hertz measures frequency — the number of complete AC cycles per second. North America uses 60 Hz; most other countries use 50 Hz."
+
+  - question: "What does an AC adapter (power brick) do?"
+    options:
+      - "Converts DC from the wall into AC for your device"
+      - "Converts AC from the wall into DC for your device"
+      - "Increases the frequency of the current"
+      - "Stores electricity for later use"
+    correctIndex: 1
+    explanation: "An AC adapter converts the alternating current from a wall outlet into the direct current that electronic devices like laptops and phones require."
+
+  - question: "Which waveform best describes how AC voltage changes over time?"
+    options:
+      - "Square wave"
+      - "Flat line"
+      - "Sine wave"
+      - "Sawtooth wave"
+    correctIndex: 2
+    explanation: "Standard AC voltage follows a sine wave — a smooth, repeating curve that swings between positive and negative peaks."
+
+passingScore: 4

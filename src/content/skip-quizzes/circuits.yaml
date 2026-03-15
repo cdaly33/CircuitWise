@@ -1,0 +1,48 @@
+stageSlug: "circuits"
+questions:
+  - question: "What are the four essential parts of every circuit?"
+    options:
+      - "Resistor, capacitor, inductor, transistor"
+      - "Source, conductor, load, return path"
+      - "Battery, switch, fuse, ground"
+      - "Voltage, current, resistance, power"
+    correctIndex: 1
+    explanation: "Every circuit requires a source (energy), a conductor (path), a load (component that uses energy), and a return path to complete the loop."
+
+  - question: "In a series circuit, what happens when one component fails?"
+    options:
+      - "The other components get brighter"
+      - "Nothing changes for the other components"
+      - "The entire circuit stops working"
+      - "Current increases through the remaining components"
+    correctIndex: 2
+    explanation: "In a series circuit there is only one path for current. If any component breaks, the loop is broken and all components stop working."
+
+  - question: "In a parallel circuit, what is true about the voltage across each branch?"
+    options:
+      - "It divides equally among branches"
+      - "It is different for every branch"
+      - "It is the same across every branch"
+      - "It depends on the number of branches"
+    correctIndex: 2
+    explanation: "In a parallel circuit, every branch is connected across the same two points, so each branch receives the full source voltage."
+
+  - question: "What is a short circuit?"
+    options:
+      - "A circuit with very few components"
+      - "A circuit that is physically small"
+      - "An unintended low-resistance path that causes excessive current"
+      - "A circuit that has been turned off"
+    correctIndex: 2
+    explanation: "A short circuit is an accidental low-resistance path that bypasses the load, causing dangerously high current that can generate extreme heat and start fires."
+
+  - question: "What is the purpose of the ground wire (third prong) on a power plug?"
+    options:
+      - "It carries current during normal operation"
+      - "It provides a safety path for fault current to prevent electric shock"
+      - "It makes the plug fit more securely in the outlet"
+      - "It reduces the electricity bill"
+    correctIndex: 1
+    explanation: "The ground wire provides a safe path for current during a fault condition. If a hot wire touches a metal case, the ground wire carries the fault current to the breaker panel, tripping the breaker before anyone is harmed."
+
+passingScore: 4
