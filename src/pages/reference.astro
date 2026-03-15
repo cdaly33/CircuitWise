@@ -226,6 +226,93 @@ import FormulaCard from '../components/content/FormulaCard.astro';
       </div>
     </section>
 
+    <!-- Safety Quick Rules -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">⚡ Safety Quick Rules</h2>
+      <div class="p-5 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
+        <ol class="list-decimal list-inside space-y-3 text-[var(--color-text-muted)]">
+          <li><strong class="text-[var(--color-text)]">Always de-energize before working.</strong> Use <a href="/glossary/lockout-tagout/" class="underline hover:text-[var(--color-primary)]">lockout/tagout (LOTO)</a> procedures and verify zero energy with a tested meter.</li>
+          <li><strong class="text-[var(--color-text)]">Treat every conductor as live</strong> until you personally verify it is de-energized with a reliable <a href="/glossary/multimeter/" class="underline hover:text-[var(--color-primary)]">multimeter</a>.</li>
+          <li><strong class="text-[var(--color-text)]">Wear appropriate PPE.</strong> Insulated gloves, safety glasses, and <a href="/glossary/arc-flash/" class="underline hover:text-[var(--color-primary)]">arc-rated clothing</a> matched to the hazard level.</li>
+          <li><strong class="text-[var(--color-text)]">Never work alone on energized equipment.</strong> Always have a safety partner and know the location of the nearest emergency shutoff.</li>
+          <li><strong class="text-[var(--color-text)]">Respect ampacity ratings.</strong> Never use undersized <a href="/glossary/conductor/" class="underline hover:text-[var(--color-primary)]">conductors</a> or bypass <a href="/glossary/fuse/" class="underline hover:text-[var(--color-primary)]">fuses</a> and <a href="/glossary/circuit-breaker/" class="underline hover:text-[var(--color-primary)]">breakers</a>.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Common Formulas at a Glance -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">Common Formulas at a Glance</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse text-left">
+          <thead>
+            <tr class="border-b border-[var(--color-border)]">
+              <th class="py-2 pr-4 font-semibold">Formula</th>
+              <th class="py-2 pr-4 font-semibold">Solves For</th>
+              <th class="py-2 font-semibold">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4 font-mono">V = I × R</td>
+              <td class="py-2 pr-4">Voltage</td>
+              <td class="py-2"><a href="/glossary/ohms-law/" class="underline hover:text-[var(--color-primary)]">Ohm's Law</a></td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4 font-mono">P = V × I</td>
+              <td class="py-2 pr-4">Power</td>
+              <td class="py-2"><a href="/glossary/watt/" class="underline hover:text-[var(--color-primary)]">Watt's Law</a></td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4 font-mono">R_total = R₁ + R₂ + …</td>
+              <td class="py-2 pr-4">Series Resistance</td>
+              <td class="py-2"><a href="/lessons/circuits/series-circuits/" class="underline hover:text-[var(--color-primary)]">Series circuits</a></td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4 font-mono">1/R_total = 1/R₁ + 1/R₂ + …</td>
+              <td class="py-2 pr-4">Parallel Resistance</td>
+              <td class="py-2"><a href="/lessons/circuits/parallel-circuits/" class="underline hover:text-[var(--color-primary)]">Parallel circuits</a></td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4 font-mono">E = P × t</td>
+              <td class="py-2 pr-4">Energy (kWh)</td>
+              <td class="py-2">P in kW, t in hours</td>
+            </tr>
+            <tr class="border-b border-[var(--color-border)]">
+              <td class="py-2 pr-4 font-mono">f = 1 / T</td>
+              <td class="py-2 pr-4">Frequency</td>
+              <td class="py-2"><a href="/glossary/frequency/" class="underline hover:text-[var(--color-primary)]">T = period in seconds</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Topic Links -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">Explore by Topic</h2>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <a href="/lessons/circuits/parts-of-a-circuit/" class="flex items-center gap-2 p-3 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors">
+          🔌 <span>Parts of a Circuit</span>
+        </a>
+        <a href="/lessons/circuits/series-circuits/" class="flex items-center gap-2 p-3 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors">
+          ➡️ <span>Series Circuits</span>
+        </a>
+        <a href="/lessons/circuits/parallel-circuits/" class="flex items-center gap-2 p-3 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors">
+          🔀 <span>Parallel Circuits</span>
+        </a>
+        <a href="/lessons/circuits/ground-and-grounding/" class="flex items-center gap-2 p-3 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors">
+          ⏚ <span>Ground &amp; Grounding</span>
+        </a>
+        <a href="/lessons/ac-vs-dc/what-is-alternating-current/" class="flex items-center gap-2 p-3 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors">
+          〰️ <span>What is AC?</span>
+        </a>
+        <a href="/lessons/ac-vs-dc/what-is-direct-current/" class="flex items-center gap-2 p-3 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-colors">
+          ⚡ <span>What is DC?</span>
+        </a>
+      </div>
+    </section>
+
     <!-- Links -->
     <section class="mb-8 flex flex-wrap gap-4">
       <a
