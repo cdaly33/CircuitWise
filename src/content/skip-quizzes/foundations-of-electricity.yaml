@@ -1,0 +1,47 @@
+stageSlug: "foundations-of-electricity"
+questions:
+  - question: "What is voltage?"
+    options:
+      - "The flow of electrons through a conductor"
+      - "The electrical pressure that pushes electrons through a circuit"
+      - "The opposition to current flow"
+      - "The number of electrons in a wire"
+    correctIndex: 1
+    explanation: "Voltage is the electrical pressure (potential difference) that pushes electrons through a conductor. It is measured in volts (V)."
+
+  - question: "According to Ohm's Law, if a 12V battery is connected to a 4Ω resistor, what is the current?"
+    options:
+      - "48A"
+      - "0.33A"
+      - "3A"
+      - "16A"
+    correctIndex: 2
+    explanation: "Using Ohm's Law: I = V ÷ R = 12V ÷ 4Ω = 3A. Current equals voltage divided by resistance."
+
+  - question: "What makes copper a good conductor?"
+    options:
+      - "It is shiny and attractive"
+      - "It has tightly bound electrons"
+      - "It has many free electrons that can move easily between atoms"
+      - "It is a heavy metal"
+    correctIndex: 2
+    explanation: "Copper has many free electrons in its outer shell that can move easily from atom to atom, allowing electric current to flow with very little resistance."
+
+  - question: "What must be true for current to flow in a circuit?"
+    options:
+      - "The voltage must be at least 120V"
+      - "The circuit must contain a semiconductor"
+      - "There must be a complete, closed loop from source through load and back"
+      - "The wires must be made of gold"
+    correctIndex: 2
+    explanation: "Current requires a complete path (closed circuit) to flow. If the loop is broken at any point, current stops flowing."
+
+  - question: "In Ohm's Law (V = I × R), what happens to current if you double the resistance while keeping voltage the same?"
+    options:
+      - "Current doubles"
+      - "Current is cut in half"
+      - "Current stays the same"
+      - "Current quadruples"
+    correctIndex: 1
+    explanation: "From I = V ÷ R, if resistance doubles and voltage stays the same, current is halved. Resistance and current are inversely proportional when voltage is constant."
+passingScore: 4

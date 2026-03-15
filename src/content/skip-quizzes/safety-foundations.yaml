@@ -1,0 +1,47 @@
+stageSlug: "safety-foundations"
+questions:
+  - question: "What is the most important first step before working on any electrical circuit?"
+    options:
+      - "Put on rubber gloves"
+      - "Verify the power is off using a voltage tester"
+      - "Tell someone what you're doing"
+      - "Gather your tools"
+    correctIndex: 1
+    explanation: "Always verify power is off with a voltage tester before touching any electrical component. Never assume power is off just because a switch is flipped."
+
+  - question: "What does lockout/tagout (LOTO) protect against?"
+    options:
+      - "Lightning strikes"
+      - "Power surges"
+      - "Accidental re-energization of equipment during work"
+      - "Voltage fluctuations"
+    correctIndex: 2
+    explanation: "Lockout/tagout ensures that equipment is de-energized and cannot be accidentally turned back on while someone is working on it."
+
+  - question: "Why is water dangerous around electricity?"
+    options:
+      - "Water creates static electricity"
+      - "Water damages electrical components"
+      - "Water dramatically reduces your body's resistance, allowing more current to flow"
+      - "Water increases voltage"
+    correctIndex: 2
+    explanation: "Water (especially tap water with dissolved minerals) is a conductor that reduces your skin's resistance, allowing dangerous levels of current to flow through your body."
+
+  - question: "What is an arc flash?"
+    options:
+      - "A type of lightning"
+      - "A brief power outage"
+      - "An explosive release of energy when current flows through air between conductors"
+      - "A spark from static electricity"
+    correctIndex: 2
+    explanation: "An arc flash is a violent release of energy caused by an electrical fault, producing extreme temperatures, pressure waves, and intense light."
+
+  - question: "Which of these tasks should typically be performed by a licensed electrician?"
+    options:
+      - "Replacing a light switch (with power off)"
+      - "Replacing an outlet cover plate"
+      - "Adding a new circuit to the breaker panel"
+      - "Resetting a tripped circuit breaker"
+    correctIndex: 2
+    explanation: "Adding new circuits to a breaker panel requires professional knowledge of load calculations, wire sizing, and code requirements. It also typically requires a permit and inspection."
+passingScore: 4
