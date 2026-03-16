@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CircuitWise Quiz Question Schema",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "prompt",
+    "answer",
+    "solution"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique question identifier"
+    },
+    "stageId": {
+      "type": ["string", "null"],
+      "description": "Optional stage identifier"
+    },
+    "lessonId": {
+      "type": ["string", "null"],
+      "description": "Optional lesson identifier"
+    },
+    "topic": {
+      "type": ["string", "null"],
+      "description": "Topic label such as safety, ohms-law, series-circuits"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["beginner", "easy", "medium", "hard"],
+      "description": "Difficulty label for display and filtering"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["multiple-choice", "numeric"],
+      "description": "Question type supported by MVP"
+    },
+    "prompt": {
+      "type": "string",
+      "description": "Question text shown to the learner"
+    },
+    "questionLabel": {
+      "type": ["string", "null"],
+      "description": "Optional display label such as Question 1 or Quick Check"
+    },
+    "diagram": {
+      "type": ["object", "null"],
+      "required": ["kind", "src", "alt"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["image", "svg"],
+          "description": "Diagram asset kind"
+        },
+        "src": {
+          "type": "string",
+          "description": "Path or URL to diagram"
+        },
+        "alt": {
+          "type": "string",
+          "description": "Accessible alt text"
+        },
+        "caption": {
+          "type": ["string", "null"],
+          "description": "Optional caption shown under the diagram"
+        }
+      },
+      "additionalProperties": false
+    },
+    "choices": {
+      "type": "array",
+      "description": "Choices for multiple-choice questions",
+      "items": {
+        "type": "object",
+        "required": ["id", "text"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "inputs": {
+      "type": ["object", "null"],
+      "description": "Input settings for numeric questions",
+      "properties": {
+        "unit": {
+          "type": ["string", "null"],
+          "description": "Expected unit to display next to the field"
+        },
+        "decimalPlaces": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "Recommended display precision"
+        },
+        "min": {
+          "type": ["number", "null"]
+        },
+        "max": {
+          "type": ["number", "null"]
+        },
+        "placeholder": {
+          "type": ["string", "null"]
+        },
+        "acceptFractions": {
+          "type": ["boolean", "null"],
+          "description": "Reserved for future use"
+        }
+      },
+      "additionalProperties": false
+    },
+    "answer": {
+      "type": "object",
+      "description": "Correct answer definition",
+      "oneOf": [
+        {
+          "required": ["choiceId"],
+          "properties": {
+            "choiceId": {
+              "type": "string",
+              "description": "Correct choice id for multiple-choice questions"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "required": ["value"],
+          "properties": {
+            "value": {
+              "type": "number",
+              "description": "Correct numeric answer"
+            },
+            "tolerance": {
+              "type": "number",
+              "minimum": 0,
+              "default": 0,
+              "description": "Accepted absolute tolerance"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "hint": {
+      "type": ["string", "null"],
+      "description": "Optional hint shown before submission"
+    },
+    "solution": {
+      "type": "object",
+      "required": ["finalAnswer", "steps"],
+      "properties": {
+        "finalAnswer": {
+          "type": "string",
+          "description": "Human-readable final answer"
+        },
+        "summary": {
+          "type": ["string", "null"],
+          "description": "Short instructional summary shown above or below steps"
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["title"],
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Step title"
+              },
+              "body": {
+                "type": ["string", "null"],
+                "description": "Instructional explanation for the step"
+              },
+              "formula": {
+                "type": ["string", "null"],
+                "description": "Formula used in this step"
+              },
+              "substitution": {
+                "type": ["string", "null"],
+                "description": "Values substituted into the formula"
+              },
+              "result": {
+                "type": ["string", "null"],
+                "description": "Solved result for this step"
+              },
+              "note": {
+                "type": ["string", "null"],
+                "description": "Optional reinforcing explanation"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "whyItWorks": {
+          "type": ["string", "null"],
+          "description": "Brief explanation of why the process or formula applies"
+        },
+        "check": {
+          "type": ["string", "null"],
+          "description": "Optional final check or validation statement"
+        }
+      },
+      "additionalProperties": false
+    },
+    "commonMistakes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional list of common mistakes to show after submission"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional tags for filtering or grouping"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "multiple-choice"
+          }
+        }
+      },
+      "then": {
+        "required": ["choices"],
+        "properties": {
+          "choices": {
+            "minItems": 2
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "numeric"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "inputs": {
+            "type": ["object", "null"]
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}
