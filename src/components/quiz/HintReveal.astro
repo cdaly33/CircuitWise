@@ -1,0 +1,33 @@
+---
+/**
+ * HintReveal — a toggle button that reveals an optional hint.
+ * Renders nothing if no hint is provided.
+ */
+interface Props {
+  hint?: string | null;
+  questionId: string;
+}
+
+const { hint, questionId } = Astro.props;
+---
+
+{hint && (
+  <div class="quiz-hint mb-4">
+    <button
+      type="button"
+      class="quiz-hint-btn inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-bg-alt)] focus:outline-none focus:ring-2 focus:ring-[var(--color-current,#3b82f6)]/50"
+      aria-expanded="false"
+      aria-controls={`quiz-${questionId}-hint-text`}
+    >
+      <span aria-hidden="true">💡</span>
+      Show Hint
+    </button>
+    <div
+      id={`quiz-${questionId}-hint-text`}
+      class="quiz-hint-text mt-2 hidden rounded-md border-l-4 border-l-yellow-400 bg-yellow-50 p-3 text-sm text-[var(--color-text)] dark:border-l-yellow-500 dark:bg-yellow-950/20"
+      role="note"
+    >
+      {hint}
+    </div>
+  </div>
+)}

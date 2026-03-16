@@ -1,0 +1,39 @@
+---
+/**
+ * ChoiceList — radio button group for multiple-choice questions.
+ * Fully keyboard accessible with semantic fieldset/legend.
+ */
+interface Choice {
+  id: string;
+  text: string;
+}
+
+interface Props {
+  questionId: string;
+  prompt: string;
+  choices: Choice[];
+}
+
+const { questionId, prompt, choices } = Astro.props;
+const name = `quiz-${questionId}-choice`;
+---
+
+<fieldset class="quiz-choice-list mb-4">
+  <legend class="sr-only">{prompt}</legend>
+  <div class="space-y-2">
+    {choices.map((choice) => (
+      <label
+        class="quiz-choice-label flex cursor-pointer items-center gap-3 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm transition-colors hover:bg-blue-50 dark:hover:bg-blue-950/20"
+        data-choice-id={choice.id}
+      >
+        <input
+          type="radio"
+          name={name}
+          value={choice.id}
+          class="size-4 shrink-0 accent-[var(--color-current,#3b82f6)]"
+        />
+        <span class="text-[var(--color-text)]">{choice.text}</span>
+      </label>
+    ))}
+  </div>
+</fieldset>

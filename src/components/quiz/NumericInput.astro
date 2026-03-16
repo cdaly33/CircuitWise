@@ -1,0 +1,35 @@
+---
+/**
+ * NumericInput — number input field for numeric quiz questions.
+ * Shows optional unit suffix and placeholder.
+ */
+interface Props {
+  questionId: string;
+  unit?: string | null;
+  placeholder?: string | null;
+  min?: number | null;
+  max?: number | null;
+}
+
+const { questionId, unit, placeholder, min, max } = Astro.props;
+const inputId = `quiz-${questionId}-input`;
+---
+
+<div class="quiz-numeric-input mb-4">
+  <label for={inputId} class="sr-only">Your answer</label>
+  <div class="flex items-center gap-2">
+    <input
+      type="text"
+      inputmode="decimal"
+      id={inputId}
+      placeholder={placeholder ?? 'Enter your answer'}
+      min={min ?? undefined}
+      max={max ?? undefined}
+      autocomplete="off"
+      class="w-full max-w-xs rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 font-mono text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-current,#3b82f6)] focus:outline-none focus:ring-2 focus:ring-[var(--color-current,#3b82f6)]/30"
+    />
+    {unit && (
+      <span class="text-sm font-medium text-[var(--color-text-muted)]">{unit}</span>
+    )}
+  </div>
+</div>
