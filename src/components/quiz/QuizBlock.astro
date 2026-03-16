@@ -1,0 +1,359 @@
+---
+/**
+ * QuizBlock — orchestrator component that renders question cards and owns
+ * the client-side interactive script for grading, hints, feedback, and retry.
+ *
+ * Usage in .astro or .mdx:
+ *   import QuizBlock from '../components/quiz/QuizBlock.astro';
+ *   import questions from '../data/quizzes/safety-foundations.json';
+ *   <QuizBlock questions={questions} title="Quick Check" />
+ */
+import QuestionCard from './QuestionCard.astro';
+
+interface Choice {
+  id: string;
+  text: string;
+}
+
+interface DiagramInfo {
+  kind: 'image' | 'svg';
+  src: string;
+  alt: string;
+  caption?: string | null;
+}
+
+interface SolutionStep {
+  title: string;
+  body?: string | null;
+  formula?: string | null;
+  substitution?: string | null;
+  result?: string | null;
+  note?: string | null;
+}
+
+interface Solution {
+  finalAnswer: string;
+  summary?: string | null;
+  steps: SolutionStep[];
+  whyItWorks?: string | null;
+  check?: string | null;
+}
+
+interface QuizQuestion {
+  id: string;
+  type: 'multiple-choice' | 'numeric';
+  prompt: string;
+  questionLabel?: string | null;
+  diagram?: DiagramInfo | null;
+  choices?: Choice[];
+  inputs?: {
+    unit?: string | null;
+    placeholder?: string | null;
+    min?: number | null;
+    max?: number | null;
+  } | null;
+  answer: Record<string, unknown>;
+  hint?: string | null;
+  solution: Solution;
+  commonMistakes?: string[];
+}
+
+interface Props {
+  questions: QuizQuestion[];
+  title?: string;
+}
+
+const { questions, title = 'Test Your Knowledge' } = Astro.props;
+
+// Serialize answer data for the client script (kept out of visible DOM)
+const answerMap = Object.fromEntries(
+  questions.map((q) => [q.id, { type: q.type, answer: q.answer, solution: q.solution }])
+);
+---
+
+<section class="quiz-block my-8" aria-label={title}>
+  <h3 class="mb-5 flex items-center gap-2 text-xl font-bold text-[var(--color-text)]">
+    <span aria-hidden="true">🧪</span>
+    {title}
+  </h3>
+
+  <div class="space-y-6">
+    {questions.map((q) => (
+      <QuestionCard
+        id={q.id}
+        type={q.type}
+        prompt={q.prompt}
+        questionLabel={q.questionLabel}
+        diagram={q.diagram}
+        choices={q.choices}
+        inputs={q.inputs}
+        hint={q.hint}
+        solution={q.solution}
+        commonMistakes={q.commonMistakes}
+      />
+    ))}
+  </div>
+</section>
+
+<script define:vars={{ answerMap }}>
+  /**
+   * Quiz interactivity — handles check-answer, hint-reveal, retry, and
+   * feedback display via event delegation. Each question card maintains
+   * independent state through its data-question-state attribute.
+   */
+  (function () {
+    // ── Grading helpers ──────────────────────────────────────────────
+
+    function gradeMultipleChoice(selectedId, answer, choices) {
+      if (!selectedId) {
+        return { isCorrect: false, isValidation: true, message: 'Please select an answer before checking.' };
+      }
+      var correct = selectedId === answer.choiceId;
+      var correctChoice = (choices || []).find(function (c) { return c.id === answer.choiceId; });
+      var correctText = correctChoice ? correctChoice.text : answer.choiceId;
+      return {
+        isCorrect: correct,
+        isValidation: false,
+        message: correct
+          ? 'Correct \u2014 now let\u2019s confirm the steps.'
+          : 'Not quite \u2014 let\u2019s solve it step by step.',
+        correctAnswer: correctText,
+      };
+    }
+
+    function gradeNumeric(rawInput, answer, solution) {
+      var trimmed = (rawInput || '').trim();
+      if (trimmed === '') {
+        return { isCorrect: false, isValidation: true, message: 'Enter a number before checking your answer.' };
+      }
+      var parsed = Number(trimmed);
+      if (isNaN(parsed)) {
+        return { isCorrect: false, isValidation: true, message: 'That doesn\u2019t look like a number. Please enter a numeric value.' };
+      }
+      var tolerance = typeof answer.tolerance === 'number' ? answer.tolerance : 0;
+      var correct = Math.abs(parsed - answer.value) <= tolerance;
+      return {
+        isCorrect: correct,
+        isValidation: false,
+        message: correct
+          ? 'Correct \u2014 now let\u2019s confirm the steps.'
+          : 'Not quite \u2014 let\u2019s solve it step by step.',
+        correctAnswer: solution.finalAnswer,
+      };
+    }
+
+    // ── DOM helpers ──────────────────────────────────────────────────
+
+    function getCard(questionId) {
+      return document.querySelector('[data-question-id="' + questionId + '"].quiz-question-card');
+    }
+
+    function getUserAnswer(card, questionId, questionType) {
+      if (questionType === 'multiple-choice') {
+        var checked = card.querySelector('input[name="quiz-' + questionId + '-choice"]:checked');
+        return checked ? checked.value : '';
+      }
+      var input = card.querySelector('#quiz-' + questionId + '-input');
+      return input ? input.value : '';
+    }
+
+    function showFeedback(card, questionId, result) {
+      var feedbackEl = card.querySelector('#quiz-' + questionId + '-feedback');
+      if (!feedbackEl) return;
+
+      var iconEl = feedbackEl.querySelector('.quiz-feedback-icon');
+      var msgEl = feedbackEl.querySelector('.quiz-feedback-message');
+      var ansEl = feedbackEl.querySelector('.quiz-feedback-answer');
+
+      // Reset classes
+      feedbackEl.className = 'quiz-feedback mt-4 rounded-lg border-l-4 p-4 text-sm';
+
+      if (result.isValidation) {
+        // Validation warning
+        feedbackEl.classList.add(
+          'border-l-yellow-400', 'bg-yellow-50', 'text-yellow-800',
+          'dark:border-l-yellow-500', 'dark:bg-yellow-950/20', 'dark:text-yellow-200'
+        );
+        iconEl.textContent = '⚠️';
+        msgEl.textContent = result.message;
+        ansEl.textContent = '';
+      } else if (result.isCorrect) {
+        feedbackEl.classList.add(
+          'border-l-green-500', 'bg-green-50', 'text-green-800',
+          'dark:border-l-green-400', 'dark:bg-green-950/20', 'dark:text-green-200'
+        );
+        iconEl.textContent = '✓';
+        msgEl.textContent = result.message;
+        ansEl.textContent = '';
+      } else {
+        feedbackEl.classList.add(
+          'border-l-orange-500', 'bg-orange-50', 'text-orange-800',
+          'dark:border-l-orange-400', 'dark:bg-orange-950/20', 'dark:text-orange-200'
+        );
+        iconEl.textContent = '✗';
+        msgEl.textContent = result.message;
+        ansEl.textContent = result.correctAnswer ? 'The correct answer is: ' + result.correctAnswer : '';
+      }
+
+      feedbackEl.classList.remove('hidden');
+      feedbackEl.focus();
+    }
+
+    function showSolution(card) {
+      var sol = card.querySelector('.quiz-worked-solution');
+      if (sol) sol.classList.remove('hidden');
+      var mistakes = card.querySelector('.quiz-common-mistakes');
+      if (mistakes) mistakes.classList.remove('hidden');
+    }
+
+    function showRetry(card) {
+      var btn = card.querySelector('.quiz-retry-btn');
+      if (btn) btn.classList.remove('hidden');
+    }
+
+    function hideCheckButton(card) {
+      var btn = card.querySelector('.quiz-check-btn');
+      if (btn) btn.classList.add('hidden');
+    }
+
+    function disableInputs(card) {
+      card.querySelectorAll('input').forEach(function (el) { el.disabled = true; });
+    }
+
+    function resetCard(card, questionId) {
+      // Reset state
+      card.setAttribute('data-question-state', 'idle');
+
+      // Re-enable inputs
+      card.querySelectorAll('input').forEach(function (el) {
+        el.disabled = false;
+      });
+
+      // Clear selections
+      card.querySelectorAll('input[type="radio"]').forEach(function (el) {
+        el.checked = false;
+      });
+      var numInput = card.querySelector('#quiz-' + questionId + '-input');
+      if (numInput) numInput.value = '';
+
+      // Reset choice label styling
+      card.querySelectorAll('.quiz-choice-label').forEach(function (el) {
+        el.classList.remove(
+          'border-green-500', 'bg-green-50', 'dark:bg-green-950/20',
+          'border-orange-500', 'bg-orange-50', 'dark:bg-orange-950/20'
+        );
+      });
+
+      // Hide feedback, solution, mistakes, retry
+      var feedback = card.querySelector('#quiz-' + questionId + '-feedback');
+      if (feedback) feedback.classList.add('hidden');
+      var sol = card.querySelector('.quiz-worked-solution');
+      if (sol) sol.classList.add('hidden');
+      var mistakes = card.querySelector('.quiz-common-mistakes');
+      if (mistakes) mistakes.classList.add('hidden');
+      var retry = card.querySelector('.quiz-retry-btn');
+      if (retry) retry.classList.add('hidden');
+
+      // Show check button
+      var check = card.querySelector('.quiz-check-btn');
+      if (check) check.classList.remove('hidden');
+
+      // Hide hint
+      var hintText = card.querySelector('.quiz-hint-text');
+      var hintBtn = card.querySelector('.quiz-hint-btn');
+      if (hintText) hintText.classList.add('hidden');
+      if (hintBtn) {
+        hintBtn.setAttribute('aria-expanded', 'false');
+        hintBtn.textContent = '';
+        hintBtn.innerHTML = '<span aria-hidden="true">💡</span> Show Hint';
+      }
+    }
+
+    function highlightChoices(card, questionId, correctChoiceId) {
+      card.querySelectorAll('.quiz-choice-label').forEach(function (label) {
+        var choiceId = label.getAttribute('data-choice-id');
+        if (choiceId === correctChoiceId) {
+          label.classList.add('border-green-500', 'bg-green-50', 'dark:bg-green-950/20');
+        } else if (label.querySelector('input:checked')) {
+          label.classList.add('border-orange-500', 'bg-orange-50', 'dark:bg-orange-950/20');
+        }
+      });
+    }
+
+    // ── Event delegation ─────────────────────────────────────────────
+
+    document.addEventListener('click', function (e) {
+      var target = e.target;
+
+      // Check Answer button
+      var checkBtn = target.closest('.quiz-check-btn');
+      if (checkBtn) {
+        var qId = checkBtn.getAttribute('data-question-id');
+        var card = getCard(qId);
+        if (!card || !answerMap[qId]) return;
+
+        var meta = answerMap[qId];
+        var userAnswer = getUserAnswer(card, qId, meta.type);
+        var result;
+
+        if (meta.type === 'multiple-choice') {
+          // Get choices from DOM data
+          var choices = [];
+          card.querySelectorAll('.quiz-choice-label').forEach(function (label) {
+            choices.push({
+              id: label.getAttribute('data-choice-id'),
+              text: label.querySelector('span').textContent,
+            });
+          });
+          result = gradeMultipleChoice(userAnswer, meta.answer, choices);
+        } else {
+          result = gradeNumeric(userAnswer, meta.answer, meta.solution);
+        }
+
+        showFeedback(card, qId, result);
+
+        if (!result.isValidation) {
+          card.setAttribute('data-question-state', result.isCorrect ? 'correct' : 'incorrect');
+          disableInputs(card);
+          hideCheckButton(card);
+          showSolution(card);
+          showRetry(card);
+
+          // Highlight correct/incorrect choices for MC
+          if (meta.type === 'multiple-choice') {
+            highlightChoices(card, qId, meta.answer.choiceId);
+          }
+        }
+
+        return;
+      }
+
+      // Hint button
+      var hintBtn = target.closest('.quiz-hint-btn');
+      if (hintBtn) {
+        var hintCard = hintBtn.closest('.quiz-question-card');
+        var hintText = hintCard ? hintCard.querySelector('.quiz-hint-text') : null;
+        if (hintText) {
+          var expanded = hintBtn.getAttribute('aria-expanded') === 'true';
+          hintBtn.setAttribute('aria-expanded', String(!expanded));
+          hintText.classList.toggle('hidden');
+          if (!expanded) {
+            hintBtn.innerHTML = '<span aria-hidden="true">💡</span> Hide Hint';
+          } else {
+            hintBtn.innerHTML = '<span aria-hidden="true">💡</span> Show Hint';
+          }
+        }
+        return;
+      }
+
+      // Retry button
+      var retryBtn = target.closest('.quiz-retry-btn');
+      if (retryBtn) {
+        var rId = retryBtn.getAttribute('data-question-id');
+        var rCard = getCard(rId);
+        if (rCard) resetCard(rCard, rId);
+        return;
+      }
+    });
+  })();
+</script>
