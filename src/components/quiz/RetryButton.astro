@@ -1,0 +1,20 @@
+---
+/**
+ * RetryButton — allows user to reset a question to try again.
+ * Hidden by default; shown via JS after submission.
+ */
+interface Props {
+  questionId: string;
+}
+
+const { questionId } = Astro.props;
+---
+
+<button
+  type="button"
+  class="quiz-retry-btn mt-3 hidden inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2 text-sm font-medium text-[var(--color-text)] transition-colors hover:bg-[var(--color-bg-alt)] focus:outline-none focus:ring-2 focus:ring-[var(--color-current,#3b82f6)]/50"
+  data-question-id={questionId}
+>
+  <span aria-hidden="true">🔄</span>
+  Try Again
+</button>

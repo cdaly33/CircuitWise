@@ -1,0 +1,27 @@
+---
+/**
+ * FeedbackBanner — displays correctness feedback after answer submission.
+ * Hidden by default; shown via JS. Uses ARIA live region and non-color
+ * indicators (icon + text) to communicate result accessibly.
+ */
+interface Props {
+  questionId: string;
+}
+
+const { questionId } = Astro.props;
+---
+
+<div
+  id={`quiz-${questionId}-feedback`}
+  class="quiz-feedback mt-4 hidden rounded-lg border-l-4 p-4 text-sm"
+  aria-live="polite"
+  role="status"
+>
+  <div class="flex items-start gap-2">
+    <span class="quiz-feedback-icon mt-0.5 text-lg" aria-hidden="true"></span>
+    <div>
+      <p class="quiz-feedback-message font-semibold"></p>
+      <p class="quiz-feedback-answer mt-1 text-[var(--color-text-muted)]"></p>
+    </div>
+  </div>
+</div>
