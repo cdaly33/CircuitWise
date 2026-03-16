@@ -1,0 +1,140 @@
+---
+/**
+ * QuestionCard — assembles all quiz sub-components into a single
+ * bordered card for one question. Uses data attributes for JS hooks.
+ */
+import DiagramPanel from './DiagramPanel.astro';
+import ChoiceList from './ChoiceList.astro';
+import NumericInput from './NumericInput.astro';
+import HintReveal from './HintReveal.astro';
+import FeedbackBanner from './FeedbackBanner.astro';
+import WorkedSolution from './WorkedSolution.astro';
+import CommonMistakes from './CommonMistakes.astro';
+import RetryButton from './RetryButton.astro';
+
+interface Choice {
+  id: string;
+  text: string;
+}
+
+interface DiagramInfo {
+  kind: 'image' | 'svg';
+  src: string;
+  alt: string;
+  caption?: string | null;
+}
+
+interface SolutionStep {
+  title: string;
+  body?: string | null;
+  formula?: string | null;
+  substitution?: string | null;
+  result?: string | null;
+  note?: string | null;
+}
+
+interface Solution {
+  finalAnswer: string;
+  summary?: string | null;
+  steps: SolutionStep[];
+  whyItWorks?: string | null;
+  check?: string | null;
+}
+
+interface Props {
+  id: string;
+  type: 'multiple-choice' | 'numeric';
+  prompt: string;
+  questionLabel?: string | null;
+  diagram?: DiagramInfo | null;
+  choices?: Choice[];
+  inputs?: {
+    unit?: string | null;
+    placeholder?: string | null;
+    min?: number | null;
+    max?: number | null;
+  } | null;
+  hint?: string | null;
+  solution: Solution;
+  commonMistakes?: string[];
+}
+
+const { id, type, prompt, questionLabel, diagram, choices, inputs, hint, solution, commonMistakes } = Astro.props;
+---
+
+<div
+  class="quiz-question-card rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-5 shadow-sm"
+  data-question-id={id}
+  data-question-type={type}
+  data-question-state="idle"
+>
+  {/* Question label */}
+  {questionLabel && (
+    <p class="mb-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
+      {questionLabel}
+    </p>
+  )}
+
+  {/* Prompt */}
+  <p class="mb-4 text-base font-medium leading-relaxed text-[var(--color-text)]">
+    {prompt}
+  </p>
+
+  {/* Optional diagram */}
+  <DiagramPanel diagram={diagram} />
+
+  {/* Answer input area */}
+  {type === 'multiple-choice' && choices && (
+    <ChoiceList questionId={id} prompt={prompt} choices={choices} />
+  )}
+
+  {type === 'numeric' && (
+    <NumericInput
+      questionId={id}
+      unit={inputs?.unit}
+      placeholder={inputs?.placeholder}
+      min={inputs?.min}
+      max={inputs?.max}
+    />
+  )}
+
+  {/* Hint */}
+  <HintReveal hint={hint} questionId={id} />
+
+  {/* Check Answer button */}
+  <button
+    type="button"
+    class="quiz-check-btn rounded-md bg-[var(--color-current,#3b82f6)] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--color-current,#3b82f6)] focus:ring-offset-2"
+    data-question-id={id}
+  >
+    Check Answer
+  </button>
+
+  {/* Feedback banner */}
+  <FeedbackBanner questionId={id} />
+
+  {/* Retry button */}
+  <RetryButton questionId={id} />
+
+  {/* Worked solution (hidden until submission) */}
+  <WorkedSolution
+    finalAnswer={solution.finalAnswer}
+    summary={solution.summary}
+    steps={solution.steps}
+    whyItWorks={solution.whyItWorks}
+    check={solution.check}
+  />
+
+  {/* Common mistakes (hidden until submission) */}
+  <CommonMistakes mistakes={commonMistakes} />
+
+  {/* No-JS fallback */}
+  <noscript>
+    <details class="mt-4 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-alt)] p-3">
+      <summary class="cursor-pointer font-medium text-[var(--color-text)]">Show Answer</summary>
+      <div class="mt-2 text-sm text-[var(--color-text)]">
+        <p><strong>Answer:</strong> {solution.finalAnswer}</p>
+      </div>
+    </details>
+  </noscript>
+</div>
