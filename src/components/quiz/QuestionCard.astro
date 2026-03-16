@@ -51,8 +51,6 @@ interface Props {
   inputs?: {
     unit?: string | null;
     placeholder?: string | null;
-    min?: number | null;
-    max?: number | null;
   } | null;
   hint?: string | null;
   solution: Solution;
@@ -93,8 +91,6 @@ const { id, type, prompt, questionLabel, diagram, choices, inputs, hint, solutio
       questionId={id}
       unit={inputs?.unit}
       placeholder={inputs?.placeholder}
-      min={inputs?.min}
-      max={inputs?.max}
     />
   )}
 
