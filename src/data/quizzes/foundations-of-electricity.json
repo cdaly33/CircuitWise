@@ -1,0 +1,155 @@
+[
+  {
+    "id": "fund-num-001",
+    "stageId": "foundations-of-electricity",
+    "lessonId": "voltage-current-and-resistance-together",
+    "topic": "ohms-law",
+    "difficulty": "beginner",
+    "type": "numeric",
+    "prompt": "A 110 V source powers three resistors in series: 10 Ω, 15 Ω, and 30 Ω. What is the total current in amps?",
+    "questionLabel": "Practice Question 1",
+    "inputs": {
+      "unit": "A",
+      "placeholder": "e.g. 2"
+    },
+    "answer": {
+      "value": 2,
+      "tolerance": 0.01
+    },
+    "hint": "First add up all the resistances, then use Ohm's Law: I = V / R.",
+    "solution": {
+      "finalAnswer": "2 A",
+      "summary": "In a series circuit, resistances add together. Then apply Ohm's Law to find the current.",
+      "steps": [
+        {
+          "title": "Identify the circuit type",
+          "body": "All three resistors are in a single loop, so this is a series circuit."
+        },
+        {
+          "title": "Find total resistance",
+          "formula": "R_total = R1 + R2 + R3",
+          "substitution": "R_total = 10 + 15 + 30",
+          "result": "R_total = 55 Ω"
+        },
+        {
+          "title": "Choose the formula",
+          "formula": "I = V / R",
+          "body": "Ohm's Law tells us current equals voltage divided by resistance."
+        },
+        {
+          "title": "Substitute values",
+          "substitution": "I = 110 / 55"
+        },
+        {
+          "title": "Solve",
+          "result": "I = 2 A"
+        },
+        {
+          "title": "Interpret the result",
+          "body": "In a series circuit, the same 2 A of current flows through every component.",
+          "note": "If any one resistor were removed, the circuit would break and no current would flow."
+        }
+      ],
+      "whyItWorks": "Ohm's Law (I = V / R) is the foundation of circuit analysis. In a series circuit, the total resistance is the sum of all individual resistances.",
+      "check": "Verify: 2 A × 55 Ω = 110 V ✓"
+    },
+    "commonMistakes": [
+      "Forgetting to add all resistances first — you must find R_total before dividing.",
+      "Dividing resistance by voltage instead of voltage by resistance."
+    ],
+    "tags": ["ohms-law", "series", "current", "beginner"]
+  },
+  {
+    "id": "fund-num-002",
+    "stageId": "foundations-of-electricity",
+    "lessonId": "voltage-current-and-resistance-together",
+    "topic": "series-circuits",
+    "difficulty": "beginner",
+    "type": "numeric",
+    "prompt": "Three resistors are connected in series: 22 Ω, 33 Ω, and 45 Ω. What is the total resistance in ohms?",
+    "questionLabel": "Practice Question 2",
+    "inputs": {
+      "unit": "Ω",
+      "placeholder": "e.g. 100"
+    },
+    "answer": {
+      "value": 100,
+      "tolerance": 0.01
+    },
+    "hint": "In a series circuit, total resistance is the sum of all individual resistances.",
+    "solution": {
+      "finalAnswer": "100 Ω",
+      "steps": [
+        {
+          "title": "Identify the circuit type",
+          "body": "The resistors are connected in series — one after another in a single path."
+        },
+        {
+          "title": "Apply the series resistance formula",
+          "formula": "R_total = R1 + R2 + R3",
+          "substitution": "R_total = 22 + 33 + 45",
+          "result": "R_total = 100 Ω"
+        },
+        {
+          "title": "Interpret the result",
+          "body": "The combined resistance of the three components is 100 Ω. The power source 'sees' this as a single 100 Ω load."
+        }
+      ],
+      "whyItWorks": "In a series circuit, current must pass through every resistor. Each one adds resistance to the path, so the total is always the sum."
+    },
+    "commonMistakes": [
+      "Using the parallel formula (1/R_total = 1/R1 + 1/R2 + …) instead of simple addition — that formula is only for parallel circuits."
+    ],
+    "tags": ["series", "resistance", "beginner"]
+  },
+  {
+    "id": "fund-num-003",
+    "stageId": "foundations-of-electricity",
+    "lessonId": "voltage-current-and-resistance-together",
+    "topic": "power",
+    "difficulty": "easy",
+    "type": "numeric",
+    "prompt": "A device operates at 12 V and draws 3 A of current. What is the power consumption in watts?",
+    "questionLabel": "Practice Question 3",
+    "inputs": {
+      "unit": "W",
+      "placeholder": "e.g. 36"
+    },
+    "answer": {
+      "value": 36,
+      "tolerance": 0.01
+    },
+    "hint": "Power equals voltage times current: P = V × I.",
+    "solution": {
+      "finalAnswer": "36 W",
+      "summary": "The power formula connects voltage and current to energy consumption.",
+      "steps": [
+        {
+          "title": "Choose the formula",
+          "formula": "P = V × I",
+          "body": "Power is the rate at which electrical energy is used. It's measured in watts."
+        },
+        {
+          "title": "Substitute the values",
+          "substitution": "P = 12 × 3"
+        },
+        {
+          "title": "Solve",
+          "result": "P = 36 W"
+        },
+        {
+          "title": "Interpret the result",
+          "body": "The device consumes 36 watts of electrical power. This is similar to a small incandescent light bulb.",
+          "note": "Remember: watts tell you how fast energy is being used, not how much total energy is stored."
+        }
+      ],
+      "whyItWorks": "P = V × I works because power is the product of the 'push' (voltage) and the 'flow' (current). More push or more flow means more power.",
+      "check": "Verify: 36 W / 12 V = 3 A ✓"
+    },
+    "commonMistakes": [
+      "Confusing watts with watt-hours — watts measure instantaneous power, watt-hours measure energy over time.",
+      "Dividing voltage by current instead of multiplying."
+    ],
+    "tags": ["power", "voltage", "current", "easy"]
+  }
+]

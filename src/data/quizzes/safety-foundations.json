@@ -1,0 +1,107 @@
+[
+  {
+    "id": "safety-mc-001",
+    "stageId": "safety-foundations",
+    "topic": "safety",
+    "difficulty": "beginner",
+    "type": "multiple-choice",
+    "prompt": "Why is electricity considered an 'invisible danger'?",
+    "questionLabel": "Quick Check 1",
+    "choices": [
+      { "id": "a", "text": "It only flows at night when you can't see it" },
+      { "id": "b", "text": "You cannot see, smell, or hear it in a wire" },
+      { "id": "c", "text": "It moves too fast for the human eye" },
+      { "id": "d", "text": "It only becomes dangerous after a power surge" }
+    ],
+    "answer": { "choiceId": "b" },
+    "hint": "Think about your senses — can any of them detect current flowing through a wire?",
+    "solution": {
+      "finalAnswer": "You cannot see, smell, or hear it in a wire.",
+      "steps": [
+        {
+          "title": "Recognise the core danger",
+          "body": "Unlike fire or a sharp blade, electricity gives no sensory warning. A live wire looks identical to a dead one."
+        },
+        {
+          "title": "Understand the implication",
+          "body": "Because you cannot detect it with your senses, you must always assume a wire could be live and test before touching."
+        }
+      ],
+      "whyItWorks": "Safety awareness starts with understanding that electricity provides no visible or audible cue — you must rely on tools and procedures to stay safe."
+    },
+    "commonMistakes": [
+      "Assuming a wire is safe because it 'looks fine' — appearance tells you nothing about whether current is flowing."
+    ],
+    "tags": ["safety", "awareness", "beginner"]
+  },
+  {
+    "id": "safety-mc-002",
+    "stageId": "safety-foundations",
+    "topic": "safety",
+    "difficulty": "beginner",
+    "type": "multiple-choice",
+    "prompt": "Which of the following is a correct reason to wear rubber-soled shoes when working near electrical equipment?",
+    "questionLabel": "Quick Check 2",
+    "choices": [
+      { "id": "a", "text": "Rubber keeps your feet warm near high-voltage equipment" },
+      { "id": "b", "text": "Rubber is an insulator and reduces the chance of current flowing through your body to ground" },
+      { "id": "c", "text": "Rubber shoes are required by fashion guidelines on job sites" },
+      { "id": "d", "text": "Rubber prevents static electricity from building up" }
+    ],
+    "answer": { "choiceId": "b" },
+    "hint": "Think about what materials block the flow of electricity.",
+    "solution": {
+      "finalAnswer": "Rubber is an insulator and reduces the chance of current flowing through your body to ground.",
+      "steps": [
+        {
+          "title": "Recall what insulators do",
+          "body": "Insulators resist the flow of electric current. Rubber is one of the best common insulators."
+        },
+        {
+          "title": "Apply to the body path",
+          "body": "If you accidentally touch a live conductor, current needs a path through your body to ground. Rubber soles break that path, greatly reducing the risk of shock."
+        }
+      ],
+      "whyItWorks": "Personal protective equipment (PPE) like insulated footwear creates a barrier in the electrical path, which is a fundamental principle of electrical safety."
+    },
+    "commonMistakes": [
+      "Thinking any shoe is fine — only insulating materials like rubber provide meaningful protection against electrical current."
+    ],
+    "tags": ["safety", "PPE", "beginner"]
+  },
+  {
+    "id": "safety-mc-003",
+    "stageId": "safety-foundations",
+    "topic": "safety",
+    "difficulty": "beginner",
+    "type": "multiple-choice",
+    "prompt": "When should you call a licensed electrician instead of doing the work yourself?",
+    "questionLabel": "Quick Check 3",
+    "choices": [
+      { "id": "a", "text": "Only when the job costs more than $500" },
+      { "id": "b", "text": "Whenever the work involves your home's main panel, new circuits, or anything you're unsure about" },
+      { "id": "c", "text": "Only for outdoor electrical work" },
+      { "id": "d", "text": "Never — basic online research is enough for any electrical job" }
+    ],
+    "answer": { "choiceId": "b" },
+    "hint": "Think about situations where a mistake could cause serious harm or violate building codes.",
+    "solution": {
+      "finalAnswer": "Whenever the work involves your home's main panel, new circuits, or anything you're unsure about.",
+      "steps": [
+        {
+          "title": "Identify high-risk work",
+          "body": "Work on the main breaker panel, adding new circuits, and anything involving permits or inspections should always be done by a licensed professional."
+        },
+        {
+          "title": "Apply the uncertainty rule",
+          "body": "If you are unsure about any part of an electrical task — the wiring, the codes, the safety steps — that uncertainty itself is the signal to call a professional."
+        }
+      ],
+      "whyItWorks": "Licensed electricians have training, insurance, and knowledge of local codes. The cost of hiring one is always less than the cost of a serious accident or a house fire."
+    },
+    "commonMistakes": [
+      "Thinking a quick YouTube video is sufficient for complex electrical work — building codes and safety procedures vary by location and require professional judgement."
+    ],
+    "tags": ["safety", "professional", "beginner"]
+  }
+]
