@@ -1,0 +1,71 @@
+---
+/**
+ * WorkedSolution — container for the step-by-step worked solution.
+ * Renders the steps list plus optional summary, whyItWorks, and check fields.
+ * Hidden by default; shown via JS after answer submission.
+ */
+import SolutionStep from './SolutionStep.astro';
+
+interface Step {
+  title: string;
+  body?: string | null;
+  formula?: string | null;
+  substitution?: string | null;
+  result?: string | null;
+  note?: string | null;
+}
+
+interface Props {
+  finalAnswer: string;
+  summary?: string | null;
+  steps: Step[];
+  whyItWorks?: string | null;
+  check?: string | null;
+}
+
+const { finalAnswer, summary, steps, whyItWorks, check } = Astro.props;
+---
+
+<div class="quiz-worked-solution mt-4 hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-alt)] p-5">
+  <h4 class="mb-3 flex items-center gap-2 text-base font-bold text-[var(--color-text)]">
+    <span aria-hidden="true">📝</span>
+    Step-by-Step Solution
+  </h4>
+
+  {summary && (
+    <p class="mb-3 text-sm leading-relaxed text-[var(--color-text-muted)]">{summary}</p>
+  )}
+
+  <ol class="list-none space-y-3 pl-0">
+    {steps.map((step, i) => (
+      <SolutionStep
+        stepNumber={i + 1}
+        title={step.title}
+        body={step.body}
+        formula={step.formula}
+        substitution={step.substitution}
+        result={step.result}
+        note={step.note}
+      />
+    ))}
+  </ol>
+
+  <div class="mt-4 rounded-md bg-[var(--color-bg)] p-3">
+    <p class="text-sm font-semibold text-[var(--color-text)]">
+      ✅ Final Answer: {finalAnswer}
+    </p>
+  </div>
+
+  {whyItWorks && (
+    <div class="mt-3 rounded-md border-l-4 border-l-[var(--color-current,#3b82f6)] bg-[var(--color-bg)] p-3">
+      <p class="text-sm font-semibold text-[var(--color-text)]">Why this works</p>
+      <p class="mt-1 text-sm leading-relaxed text-[var(--color-text-muted)]">{whyItWorks}</p>
+    </div>
+  )}
+
+  {check && (
+    <p class="mt-3 text-sm font-mono text-[var(--color-text-muted)]">
+      🔍 {check}
+    </p>
+  )}
+</div>

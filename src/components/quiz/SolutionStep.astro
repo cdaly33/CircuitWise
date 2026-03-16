@@ -1,0 +1,59 @@
+---
+/**
+ * SolutionStep — a single numbered step in a worked solution.
+ * Shows title, optional body, formula (monospace), substitution, result, and note.
+ */
+interface Props {
+  stepNumber: number;
+  title: string;
+  body?: string | null;
+  formula?: string | null;
+  substitution?: string | null;
+  result?: string | null;
+  note?: string | null;
+}
+
+const { stepNumber, title, body, formula, substitution, result, note } = Astro.props;
+---
+
+<li class="pb-4 last:pb-0">
+  <div class="flex items-start gap-3">
+    <span
+      class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--color-current,#3b82f6)] text-xs font-bold text-white"
+      aria-hidden="true"
+    >
+      {stepNumber}
+    </span>
+    <div class="flex-1">
+      <p class="font-semibold text-[var(--color-text)]">{title}</p>
+
+      {body && (
+        <p class="mt-1 text-sm leading-relaxed text-[var(--color-text-muted)]">{body}</p>
+      )}
+
+      {formula && (
+        <code class="mt-1 block rounded bg-[var(--color-bg-alt)] px-3 py-1.5 font-mono text-sm text-[var(--color-text)]">
+          {formula}
+        </code>
+      )}
+
+      {substitution && (
+        <code class="mt-1 block rounded bg-[var(--color-bg-alt)] px-3 py-1.5 font-mono text-sm text-[var(--color-text)]">
+          {substitution}
+        </code>
+      )}
+
+      {result && (
+        <code class="mt-1 block rounded bg-[var(--color-bg-alt)] px-3 py-1.5 font-mono text-sm font-bold text-[var(--color-text)]">
+          {result}
+        </code>
+      )}
+
+      {note && (
+        <p class="mt-1 text-sm italic text-[var(--color-text-muted)]">
+          💡 {note}
+        </p>
+      )}
+    </div>
+  </div>
+</li>

@@ -1,0 +1,32 @@
+---
+/**
+ * DiagramPanel — renders an optional diagram (image or SVG) with alt text
+ * and an optional caption. Renders nothing when no diagram data is provided.
+ */
+interface Props {
+  diagram?: {
+    kind: 'image' | 'svg';
+    src: string;
+    alt: string;
+    caption?: string | null;
+  } | null;
+}
+
+const { diagram } = Astro.props;
+---
+
+{diagram && (
+  <figure class="my-4">
+    <img
+      src={diagram.src}
+      alt={diagram.alt}
+      loading="lazy"
+      class="mx-auto max-w-full rounded-md border border-[var(--color-border)]"
+    />
+    {diagram.caption && (
+      <figcaption class="mt-2 text-center text-sm text-[var(--color-text-muted)]">
+        {diagram.caption}
+      </figcaption>
+    )}
+  </figure>
+)}
